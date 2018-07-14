@@ -329,7 +329,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
       
  * . .profile
  * cd /etc/apache2
- * sudo vi envars
+ * sudo vi envvars
  * 아래 내용 수정 및 추가
  
        #export LANG=C
