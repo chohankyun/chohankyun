@@ -341,7 +341,6 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
        export DB_PASSWORD='********'
        export EMAIL_HOST_PASSWORD='*********'
        
- * sudo apachectl stop
  * sudo apachectl start
  
  
