@@ -29,7 +29,7 @@ SECRET_KEY = '21@6q5ny@wx+s02l067xboh@m!cikn#6mfa99-&&o+quux#p+f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '13.125.104.140', 'chohankyun.com', 'www.chohankyun.com']
+ALLOWED_HOSTS = ['127.0.0.1', '13.125.104.140', '172.31.19.140', 'chohankyun.com', 'www.chohankyun.com']
 
 # Application definition
 
