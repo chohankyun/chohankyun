@@ -222,6 +222,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 * github > chohankyun / chohankyun > Deploy keys 에 public key 등록
 * cd
 * mkdir app
+* cd app
 * git clone git@github.com:chohankyun/chohankyun.git web
 * cd web
 * sudo pip install -r requirements.txt
