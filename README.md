@@ -358,22 +358,18 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
        python manage.py compilemessages : 다국어 파일 컴파일
        
 ### EC2 만 사용
-* [ALLOWED_HOSTS] = [기존정보, 서버(EC2) 의 elastic ip 추가]  
-
-      sudo apachectl restart
+* 브라우저에서 elastic ip 로 접근 
 
 ### 도메인을 EC2 에 직접 연결 후 사용
 * 도메인 구입 사이트의 관리 페이지에서 DNS 에 A(address) record 추가
 
       chohankyun.com     eip
       *.chohankyun.com   eip
-      
-* [ALLOWED_HOSTS] = [기존정보, 도메인 추가]  
-
       sudo apachectl restart
-
+      
+* 브라우저에서 도메인으로 접근      
+  
 ### aws route53, elb (ssl 인증서), ec2 구성
-* [ALLOWED_HOSTS] = [기존정보, ec2 내부 아이피 추가]  
 * aws 에서 발행하는 인증서 생성
 
       chohankyun.com
