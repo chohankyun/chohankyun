@@ -343,8 +343,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
        
  * sudo apachectl start
  
- 
- ### django 초기화  
+### django 초기화  
 * cd /home/ubuntu/app/web
 * db table 생성
   
@@ -359,6 +358,11 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
    
        python manage.py compilemessages : 다국어 파일 컴파일
        
+### ALLOWED_HOSTS 임시 설정
+* 원래는 127.0.0.1 과 도메인 추가 
+* 임시 테스트를 위해서 서버(EC2) 아이피 추가
+* sudo apachectl restart
+
 ### 사이트 초기화
 * 프로젝트 > chohankyun > static > favicon.ico 수정
 * 프로젝트 > chohankyun > static > logo.png 수정
@@ -369,10 +373,6 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
       home > carousels 이미지 경로 추가 
       index > footer / header 추가
       
-### ALLOWED_HOSTS 임시 설정
-* 원래는 127.0.0.1 과 도메인 추가 
-* 임시 테스트를 위해서 서버(EC2) 아이피 추가
-* sudo apachectl restart
 
  
 
