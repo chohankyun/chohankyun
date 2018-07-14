@@ -127,8 +127,8 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 ### windows 환경변수 설정  
 * 프로젝트 > chohankyun > chohankyun > settings.py 파일의 환경 변수 확인
 * os.environ['DB_HOST'] 을 위한 windows 환경변수 DB_HOST=127.0.0.1
-* os.environ['DB_PASSWORD'] 을 위한 windows 환경변수 DB_PASSWORD=*******
-* os.environ['EMAIL_HOST_PASSWORD'] 을 위한 windows 환경변수 EMAIL_HOST_PASSWORD=******
+* os.environ['DB_PASSWORD'] 을 위한 windows 환경변수 DB_PASSWORD=*********
+* os.environ['EMAIL_HOST_PASSWORD'] 을 위한 windows 환경변수 EMAIL_HOST_PASSWORD=********
 
 ### log 폴더 생성  
 * window 탐색기 상에서 chohankyun 같은 레벨에 log 폴더 생성
@@ -310,7 +310,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 * sudo mysql -u root
         
       create database data_db;
-      create user 'data_user'@'%' identified by '패스워드';
+      create user 'data_user'@'%' identified by '비밀번호';
       grant all privileges on data_db.* to data_user@'%';
       flush privileges;
       
@@ -329,7 +329,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
       
  * . .profile
  * cd /etc/apache2
- * sudo vi envars
+ * sudo vi envvars
  * 아래 내용 수정 및 추가
  
        #export LANG=C
@@ -339,14 +339,13 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
        
        export DB_HOST='127.0.0.1'
        export DB_PASSWORD='********'
-       export EMAIL_HOST_PASSWORD='******'
+       export EMAIL_HOST_PASSWORD='*********'
        
- * sudo apachectl stop
  * sudo apachectl start
  
  
  ### django 초기화  
-* cd /app/web
+* cd /home/ubuntu/app/web
 * db table 생성
   
       python manage.py makemigrations : 테이블 스키마 생성
@@ -369,6 +368,11 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
       board > catagorys 추가
       home > carousels 이미지 경로 추가 
       index > footer / header 추가
+      
+### ALLOWED_HOSTS 임시 설정
+* 원래는 127.0.0.1 과 도메인 추가 
+* 임시 테스트를 위해서 서버(EC2) 아이피 추가
+
  
 
 
