@@ -345,7 +345,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
  
  
  ### django 초기화  
-* cd /app/web
+* cd /home/ubuntu/app/web
 * db table 생성
   
       python manage.py makemigrations : 테이블 스키마 생성
