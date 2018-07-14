@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-lg-8 col-sm-7">
+        <ul class="nav float-left">
+            <li class="nav-item py-3 pr-1" ng-repeat="category in board.category_list">
+                <button type="button" class="btn btn-sm btn-block btn-outline-info" ng-class="{active: board.category == category.id}" ng-click="index.go_url('/board/'+category.id)" title="{{ category.name | translate  }}">{{ category.name | translate }}</button>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-4 col-sm-5 d-none d-md-block">
+        <ul class="nav float-right">
+            <li class="nav-item py-3 pl-1" ng-repeat="order in board.order_list">
+                <button type="button" class="btn btn-sm btn-block btn-outline-secondary" ng-class="{active: order.id == board.selected_order}" ng-click="board.click_order(order.id)" title="{{ order.name | translate }}">{{ order.name | translate }}</button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6 portfolio-item small" ng-repeat="post in board.post_list.results">
+        <div class="card h-100 site-polaroid">
+            <a href ng-click="board.click_post(post.id); index.select_index_item='read'"><img class="card-img-top site-thumbnail" ng-src="{{ post.first_image_source ? post.first_image_source : 'http://via.placeholder.com/250x150?text=Text Only'}}"></a>
+            <div class="card-body">
+                <p class="card-text text-truncate font-weight-bold">
+                    <a style="color: #5bc0de" href ng-click="board.click_post(post.id); index.select_index_item='read'">{{ post.subject }}</a>
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item  text-white bg-secondary">
+                    <div class="cart-text">
+                        <div>
+                            <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ post.category_name }}
+                            <i class="fa fa-user-o" aria-hidden="true"></i> {{ post.username }}
+                            <i class="fa fa-thumbs-o-up" aria-hidden="true"> </i> {{ post.recommend_count }}
+                            <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ post.reply_count }}
+                            <i class="fa fa-envelope-open-o" aria-hidden="true"></i> {{ post.click_count }}
+                        </div>
+                        <div>
+                            <i class="fa fa-calendar" aria-hidden="true"> </i> {{ post.local_datetime }}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+
+<!-- Pagination -->
+<div paging
+     ul-class="pagination pagination-sm justify-content-center"
+     page="board.post_list.page"
+     page-size="board.post_list.page_size"
+     total="board.post_list.total"
+     paging-action="board.get_page(page)">
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="board_message_modal" tabindex="-1" role="dialog" aria-labelledby="board_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="board_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Board' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ board.message | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+

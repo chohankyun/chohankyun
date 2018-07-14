@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="chohankyun">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="free web application for python, django, djangorestframwork, angularjs">
+    <meta name="author" content="chohankyun">
+
+    <title>{{ title }}</title>
+    <link href="/static/favicon.ico" rel="icon" type="image/x-icon"/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="//rawgit.com/mishguruorg/angular-timezone-selector/master/dist/angular-timezone-selector.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.1.3/css/datetimepicker.min.css">
+
+    <link rel="stylesheet" href="/static/libs/text-angular/textAngular.css">
+    <link rel="stylesheet" href="/static/libs/angular-bootstrap-toggle/angular-bootstrap-toggle.min.css">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/libs/4-col-portfolio/4-col-portfolio.css">
+
+
+</head>
+
+<body body ng-controller="index_controller as index">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top site-top-border">
+    <div class="container">
+        <a class="navbar-brand col-lg-3 col-md-4 col-sm-6 col" href="#/" title="{{ 'To home' | translate }}">
+            <img src="/static/logo.png"  class="img-fluid" alt="{{ 'Logo' | translate }}" title="{{ 'Logo' | translate }}">
+        </a>
+        <div class="d-none d-md-block col">
+            <form class="input-group  pull-left">
+                <input type="text" class="form-control form-control-sm" ng-model="index.search_word" placeholder="{{ 'Input search word.' | translate }}"/>
+                <div class="input-group-append">
+                    <button class="btn btn-info btn-sm" type="submit" ng-click="index.search(); index.select_index_item='search'" title="{{ 'Search' | translate }}">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <ul class="nav">
+            <li class="nav-item ml-1" ng-show="index.authenticated">
+                <div class="btn-group">
+                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-block btn-outline-info dropdown-toggle" title="{{ 'Username' | translate }}">{{ index.user.username }}</button>
+                    <div class="dropdown-menu">
+                        <button type="button" class="small dropdown-item" ng-show="index.authenticated" ng-click="index.go_url('/post'); index.select_index_item='write'" title="{{ 'Write a post' | translate }}">{{ 'Write' | translate }}</button>
+                        <button type="button" class="small dropdown-item" ng-show="index.authenticated && index.select_index_item==null" ng-click="index.my_post(); index.select_index_item='my_post'" title="{{ 'Posts I wrote' | translate }}">{{ 'My posts' | translate }}</button>
+                        <button type="button" class="small dropdown-item" ng-show="index.authenticated" ng-click="index.go_url('/profile'); index.select_index_item='profile'" title="{{ 'Change my information' | translate }}">{{ 'My info' | translate }}</button>
+                        <button type="button" class="small dropdown-item" ng-show="index.authenticated" ng-click="index.go_url('/password'); index.select_index_item='password'" title="{{ 'Change password' | translate }}">{{ 'Change password' | translate }}</button>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item ml-1" ng-hide="index.authenticated">
+                <button type="button" class="btn btn-sm btn-block btn-outline-info" ng-class="{'active':index.select_index_item == 'login'}" ng-click="index.go_url('/login'); index.select_index_item='login'"
+                        title="{{ 'Login' | translate }}">{{ 'Login' | translate }}</button>
+            </li>
+            <li class="nav-item ml-1" ng-hide="index.authenticated">
+                <button type="button" class="btn btn-sm btn-block btn-outline-info" ng-class="{'active':index.select_index_item == 'register'}" ng-click="index.go_url('/register'); index.select_index_item='register'"
+                        title="{{ 'Register' | translate }}">{{ 'Register' | translate }}</button>
+            </li>
+            <li class="nav-item ml-1" ng-show="index.authenticated">
+                <button type="button" class="btn btn-sm btn-block btn-outline-info" ng-class="{'active':index.select_index_item == 'logout'}" ng-click="index.logout(); index.select_index_item='logout'"
+                        title="{{ 'Logout' | translate }}">{{ 'Logout' | translate }}</button>
+            </li>
+        </ul>
+    </div>
+    </div>
+</nav>
+<!-- Navigation -->
+
+<!-- Page Content -->
+<div class="container">
+    <div ng-view></div>
+</div>
+<!-- Page Content -->
+
+<!-- Footer -->
+<footer class="py-4 bg-dark text-white small">
+    <div class="container">
+        <p class="m-0 text-center">
+            <span class="pr-3" title="{{ 'Copyright' | translate }}" ><i class="fa fa-copyright" aria-hidden="true"></i> {{ copyright }}</span>
+            <span class="pr-3" title="{{ 'Address' | translate }}" ><i class="fa fa-building-o" aria-hidden="true"></i> {{ address }}</span>
+            <span title="{{ 'Phone' | translate }}" ><i class="fa fa-phone" aria-hidden="true"></i> {{ phone }}</span>
+        </p>
+    </div>
+</footer>
+<!-- Footer -->
+
+<!-- Modal -->
+<div class="modal fade" id="index_message_modal" tabindex="-1" role="dialog" aria-labelledby="index_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="index_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Index' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ index.message | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+<!-- Loading -->
+<div class="sk-fading-circle" ng-show="index.loading">
+    <div class="sk-circle1 sk-circle"></div>
+    <div class="sk-circle2 sk-circle"></div>
+    <div class="sk-circle3 sk-circle"></div>
+    <div class="sk-circle4 sk-circle"></div>
+    <div class="sk-circle5 sk-circle"></div>
+    <div class="sk-circle6 sk-circle"></div>
+    <div class="sk-circle7 sk-circle"></div>
+    <div class="sk-circle8 sk-circle"></div>
+    <div class="sk-circle9 sk-circle"></div>
+    <div class="sk-circle10 sk-circle"></div>
+    <div class="sk-circle11 sk-circle"></div>
+    <div class="sk-circle12 sk-circle"></div>
+</div>
+<!-- Loading -->
+
+<!-- Bootstrap core JavaScript -->
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8//angular-sanitize.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8//angular-route.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone-with-data.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.1.3/js/datetimepicker.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.1.3/js/datetimepicker.templates.min.js"></script>
+
+<script src='/static/libs/angular-bootstrap-toggle/angular-bootstrap-toggle.min.js'></script>
+<script src="/static/libs/angular-timezone-selector/angular-timezone-selector.js"></script>
+<script src="/static/libs/angular-date-time-input/dateTimeInput.js"></script>
+<script src='/static/libs/text-angular/textAngular-rangy.min.js'></script>
+<script src='/static/libs/text-angular/textAngular-sanitize.min.js'></script>
+<script src='/static/libs/text-angular/textAngular.min.js'></script>
+<script src='/static/libs/angular-translate/angular-translate.min.js'></script>
+<!-- Bootstrap core JavaScript -->
+
+
+<!-- Application module -->
+<script src="/static/chohankyun/chohankyun.js"></script>
+<script src="/static/chohankyun/shared/route/route.js"></script>
+<script src="/static/chohankyun/shared/lang/lang.js"></script>
+<script src="/static/chohankyun/shared/lang/en.js"></script>
+<script src="/static/chohankyun/shared/lang/ko.js"></script>
+<script src="/static/index_controller.js"></script>
+<script src="/static/header_model.js"></script>
+<script src="/static/footer_model.js"></script>
+<script src="/static/chohankyun/components/auth_extend/login_controller.js"></script>
+<script src="/static/chohankyun/components/auth_extend/find_controller.js"></script>
+<script src="/static/chohankyun/components/auth_extend/profile_controller.js"></script>
+<script src="/static/chohankyun/components/auth_extend/password_controller.js"></script>
+<script src="/static/chohankyun/components/auth_extend/register_directive.js"></script>
+<script src="/static/chohankyun/components/auth_extend/register_controller.js"></script>
+<script src="/static/chohankyun/shared/http/request_service.js"></script>
+<script src="/static/chohankyun/shared/valid/validate_service.js"></script>
+<script src="/static/chohankyun/shared/filter/filter.js"></script>
+<script src="/static/chohankyun/shared/paging/paging.js"></script>
+<script src="/static/chohankyun/components/auth_extend/auth_service.js"></script>
+<script src="/static/chohankyun/components/home/home_controller.js"></script>
+<script src="/static/chohankyun/components/home/home_service.js"></script>
+<script src="/static/chohankyun/components/board/board_controller.js"></script>
+<script src="/static/chohankyun/components/board/board_service.js"></script>
+<script src="/static/chohankyun/components/post/post_model.js"></script>
+<script src="/static/chohankyun/components/post/category_model.js"></script>
+<script src="/static/chohankyun/components/post/post_service.js"></script>
+<script src="/static/chohankyun/components/post/post_controller.js"></script>
+<script src="/static/chohankyun/components/post/reply_controller.js"></script>
+<script src="/static/chohankyun/components/post/reply_model.js"></script>
+<script src="/static/chohankyun/components/post/recommend_controller.js"></script>
+<script src="/static/chohankyun/components/post/recommend_model.js"></script>
+<script src="/static/chohankyun/components/search/search_controller.js"></script>
+<script src="/static/chohankyun/components/search/search_service.js"></script>
+<!-- Application module -->
+
+</body>
+</html>

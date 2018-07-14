@@ -1,0 +1,50 @@
+<style>
+    body {
+        background-color: #eee;
+    }
+</style>
+<div id="find_view" class="row justify-content-center my-5">
+    <div class="card site-polaroid" style="width: 21rem;">
+        <div class="card-header text-white bg-info">
+            <h2 align="center"><strong>{{ find.model.type | translate }}</strong></h2>
+        </div>
+        <div class="card-body small">
+            <form role="form" ng-submit="find.send_email(findForm)" name="findForm" novalidate>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Email' | translate }}</span></h5>
+                    <input name="email" id="id_email" type="text" ng-model="find.model.email" placeholder="{{ 'Email' | translate }}" class="form-control form-control-sm" required/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in find.errors.email">{{ error | translate}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-sm btn-outline-info" title="{{ find.model.type | translate}} {{ 'Send email' | translate }}">{{ find.model.type | translate}} {{ 'Send email' | translate }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/login')" title="{{ 'Login' | translate }}">{{ 'Login' | translate }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/')" title="{{ 'Cancel' | translate }}">{{ 'Cancel' | translate }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="find_message_modal" tabindex="-1" role="dialog" aria-labelledby="find_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="find_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ find.type | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ find.message | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>

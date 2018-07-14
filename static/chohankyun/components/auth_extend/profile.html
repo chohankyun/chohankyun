@@ -1,0 +1,134 @@
+<style>
+    body {
+        background-color: #eee;
+    }
+</style>
+<div id="profile_view" class="row justify-content-center my-5">
+    <div class="card  site-polaroid" style="width: 25rem;">
+        <div class="card-header text-light bg-info">
+            <h2 align="center"><strong>{{ 'My info' | translate }}</strong></h2>
+        </div>
+        <div class="card-body small">
+            <form role="form" name="profileForm" ng-submit="profile.update(profileForm)" novalidate>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Username' | translate }}</span></h5>
+                    <input name="username" id="id_username" class="form-control form-control-sm" type="text" ng-model="profile.model.username" ng-disabled="profile.is_disabled" placeholder="{{ 'Username' | translate }}" required/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.username">{{ error | translate}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group" ng-hide="profile.is_disabled">
+                    <h5><span class="badge badge-secondary">{{ 'Password' | translate }}</span></h5>
+                    <input name="password" id="id_password" class="form-control form-control-sm" type="password" ng-model="profile.model.password" placeholder="{{ 'Password' | translate }}" required/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.password">{{ error | translate}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Email' | translate }}</span></h5>
+                    <input name="email" id="id_email" class="form-control form-control-sm" type="email" ng-model="profile.model.email" placeholder="{{ 'Email' | translate }}" disabled/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.email">{{ error | translate}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Last login time' | translate }}</span></h5>
+                    <input name="email" id="id_email" class="form-control form-control-sm" type="text" ng-model="profile.model.local_last_login" placeholder="{{ 'Last login time' | translate }}" disabled/>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-sm btn-outline-info" ng-show="profile.is_disabled==false" title="{{ 'Save' | translate }}">{{ 'Save' | translate }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" ng-show="profile.is_disabled==true" ng-click="profile.is_disabled=false" title="{{ 'Update' | translate }}">{{ 'Update' | translate }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/')" title="{{ 'Cancel' | translate }}">{{ 'Cancel' | translate }}</button>
+                    <button type="button" class="float-right btn btn-sm btn-outline-danger" ng-click="profile.delete()" title="{{ 'Withdrawal' | translate }}">{{ 'Withdrawal' | translate }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="profile_change_message_modal" tabindex="-1" role="dialog" aria-labelledby="profile_change_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="profile_change_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Change my info' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ profile.message | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="profile_message_modal" tabindex="-1" role="dialog" aria-labelledby="profile_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="profile_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'My info' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ profile.message | translate}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirm_message_modal" tabindex="-1" role="dialog" aria-labelledby="confirm_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="confirm_message_modal_label"><i class="fa fa-lg fa-trash" aria-hidden="true"></i> <strong>{{ 'Withdrawal' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" name="deleteConfirmForm" ng-submit="profile.confirm(deleteConfirmForm)" novalidate>
+                <div class="modal-body bg-danger text-light">
+                    <div>
+                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Would you like to withdraw?' | translate }}
+                    </div>
+                    <div>
+                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Your membership information and all related posts will be deleted.' | translate }}
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                        <h5><span class="badge badge-danger">{{ 'Password' | translate }}</span></h5>
+                        <input name="password" id="id_password" class="form-control form-control-sm" type="password" ng-model="profile.model.password" placeholder="{{ 'Password' | translate }}" required/>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.confirm_errors.password">{{ error | translate}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-btn-confirm" type="submit" class="btn btn-sm btn-outline-danger">{{ 'Confirm' | translate }}</button>
+                    <button id="modal-btn-cancel" type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Cancel' | translate }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal -->

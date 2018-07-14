@@ -1,0 +1,89 @@
+<style>
+    body {
+        background-color: #eee;
+    }
+</style>
+<div id="login_view" class="row justify-content-center my-5">
+    <div class="card site-polaroid" style="width: 21rem;">
+        <div class="card-header text-white bg-info">
+            <h2 align="center"><strong>{{ 'Login' | translate }}</strong></h2>
+        </div>
+        <div class="card-body small">
+            <form role="form" ng-submit="login.login(loginForm)" name="loginForm" novalidate>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Username' | translate }}</span></h5>
+                    <input name="username" id="id_username" type="text" ng-model="login.model.username" placeholder="{{ 'Username' | translate }}" class="form-control form-control-sm" required/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in login.errors.username">{{ error | translate }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Password' | translate }}</span></h5>
+                    <input name="password" id="id_password" type="password" ng-model="login.model.password" placeholder="{{ 'Password' | translate }}" class="form-control form-control-sm" required/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in login.errors.password">{{ error | translate }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-sm btn-outline-info" title="{{ 'Login' | translate }}">{{ 'Login' | translate }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/register')" title="{{ 'Register' | translate }}">{{ 'Register' | translate }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/')" title="{{ 'Cancel' | translate }}">{{ 'Cancel' | translate }}</button>
+                </div>
+            </form>
+            <div class="mt-4">
+                <a class="mr-1" href ng-click="index.go_url('/find/username')" title="{{ 'Go to find username' | translate }}">{{ 'Forgot your username?' | translate }}</a>
+                <a class="ml-1" href ng-click="index.go_url('/find/password')" title="{{ 'Go to find password' | translate }}">{{ 'Forgot your password?' | translate }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="re_register_message_modal" tabindex="-1" role="dialog" aria-labelledby="re_register_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="re_register_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Member re-register message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light" ng-repeat="message in login.messages">
+                <div>
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
+                </div>
+                <div>
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'If you can not complete your email verification, you will need to sign up again and your existing membership information will be deleted.' | translate }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-danger" ng-click="login.re_register()">{{ 'Re-register' | translate }}</button>
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="login_message_modal" tabindex="-1" role="dialog" aria-labelledby="login_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="login_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Login' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light" ng-repeat="message in login.messages">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>

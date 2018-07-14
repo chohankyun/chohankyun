@@ -1,0 +1,97 @@
+<style>
+    body {
+        background-color: #eee;
+    }
+</style>
+<div id="register_view" class="row justify-content-center my-5">
+    <div class="card  site-polaroid" style="width: 30rem;">
+        <div class="card-header text-light bg-info">
+            <h2 align="center"><strong>{{ 'Register' | translate }}</strong></h2>
+        </div>
+        <div class="card-body small">
+            <form role="form" name="registerForm" ng-submit="register.register(registerForm)" novalidate>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Username' | translate }}</span></h5>
+                    <input name="username" id="id_username" class="form-control form-control-sm" type="text" ng-model="register.model.username" placeholder="{{ 'Username' | translate }}" required/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in register.errors.username">{{ error | translate}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Password' | translate }}</span></h5>
+                    <div class="text-danger">{{ 'The password is a combination of 8 or more characters, numbers and letters.' | translate }}</div>
+                    <input name="password1" id="id_password1" class="form-control form-control-sm" type="password" ng-model="register.model.password1" placeholder="{{ 'Password' | translate }}" required/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in register.errors.password1">{{ error | translate}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Password' | translate }} {{ 'Confirm' | translate }}</span></h5>
+                    <input name="password2" id="id_password2" class="form-control form-control-sm" type="password" ng-model="register.model.password2" placeholder="{{ 'Password' | translate }} {{ 'Confirm' | translate }}" required password-confirm="id_password1"/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-show='registerForm.password2.$error.password_confirm'>{{ 'Dose not match new password.' | translate }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in register.errors.password2">{{ error | translate}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <h5><span class="badge badge-secondary">{{ 'Email' | translate }}</span></h5>
+                    <div class="text-danger">{{ 'Please enter the correct email.' | translate }}</div>
+                    <div class="text-danger">{{ 'If it is a invalid email, we will not be able to process your email verification.' | translate }}</div>
+                    <div class="text-danger">{{ 'You need the registration process again.' | translate }}</div>
+                    <input name="email" id="id_email" class="form-control form-control-sm" type="email" ng-model="register.model.email" placeholder="{{ 'Email' | translate }}" required/>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in register.errors.email">{{ error | translate}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-sm btn-outline-info" title="{{ 'Register' | translate }}">{{ 'Register' | translate }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/login')" title="{{ 'Login' | translate }}">{{ 'Login' | translate }}</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/')" title="{{ 'Cancel' | translate }}">{{ 'Cancel' | translate }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="register_message_modal" tabindex="-1" role="dialog" aria-labelledby="register_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="register_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Register' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light">
+                <div ng-repeat="message in register.messages.username">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
+                </div>
+                <div ng-repeat="message in register.messages.password1">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
+                </div>
+                <div ng-repeat="message in register.messages.email">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
+                </div>
+                <div ng-repeat="message in register.messages.detail">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>

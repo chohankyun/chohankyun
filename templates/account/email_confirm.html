@@ -1,0 +1,19 @@
+{% load i18n %}{% load account %}
+{% with site_name=site.name site_domain=site.domain %}
+    <h1>{% blocktrans %}Confirm E-mail Address{% endblocktrans %}</h1>
+    <br>
+    <div>{% blocktrans %}Hello from {{ site_name }}!{% endblocktrans %}</div>
+    <br>
+    {% block content %}
+        {% if messages %}
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+    <br>
+    <div>{% blocktrans %}Thank you.{% endblocktrans %}</div>
+    <br>
+    {{ site_name }} {{ site_domain }}
+{% endwith %}
+

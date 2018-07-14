@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-09 16:55+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "E-mail is not verified."
+msgstr "이메일 검증이 완료되지 않았습니다. 이메일 검증 후 로그인이 가능합니다."
+
+msgid "Verification e-mail sent."
+msgstr "이메일 검증이 전송되었습니다. 이메일 검증 후 로그인이 가능합니다."
+
+msgid "Password reset e-mail has been sent."
+msgstr "비밀번호 재설정 이메일이 전송되었습니다."
+
+msgid "Password reset on."
+msgstr "비밀번호 재설정 이메일입니다."
+
+#, python-format
+msgid "You're receiving this e-mail because you requested a password reset for your user account at %(site_name)s."
+msgstr "%(site_name)s 의 계정 비밀번호 재설정을 위한 요청으로 이메일이 수신되었습니다."
+
+msgid "Your temporary password:"
+msgstr "임시 비밀번호:"
+
+msgid "Please click the following link and reset a temporary password."
+msgstr "아래의 링크를 클릭하면 임시 비밀번호 재설정이 완료됩니다."
+
+msgid "Please change your password on change password page after temporary password reset!"
+msgstr "임시 비밀번호 재설정 후 비밀번호 변경 페이지에서 비밀번호를 변경하십시오!"
+
+msgid "Invalid value."
+msgstr "유효하지 않은 값입니다."
+
+msgid "Invalid password."
+msgstr "유효하지 않은 비밀번호 입니다."
+
+msgid "Invalid old password."
+msgstr "기존 비밀번호가 일치 하지 않습니다."
+
+msgid "The new password and the new password confirmation do not match."
+msgstr "새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다."
+
+msgid "Password has been reset with the new password."
+msgstr "비밀번호 재설정이 완료되었습니다."
+
+msgid "Your username has been sent to your e-mail address."
+msgstr "사용자명을 이메일 주소로  보냈습니다."
+
+msgid "Username finding on."
+msgstr "사용자명 찾기 이메일입니다."
+
+#, python-format
+msgid "You're receiving this e-mail because you requested a username for your user account at %(site_name)s."
+msgstr "%(site_name)s 의 사용자명 찾기 요청으로 이 이메일이 전송되었습니다."
+
+msgid "Your username, in case you've forgotten:"
+msgstr "사용자명 :"
+
+msgid "Unable to log in with provided credentials."
+msgstr "제공된 인증데이터(아이디, 비밀번호)로는 로그인 할 수 없습니다."
+
+msgid "You do not have permission to perform this action."
+msgstr "이 작업을 수행 할 권한이 없습니다."
+
+msgid "E-mail address matching query does not exist."
+msgstr "이메일 주소가 등록 되어 있지 않습니다."
+
+msgid "Please Confirm Your E-mail Address for Sign Up."
+msgstr "회원가입을 위한 이메일 주소 검증 요청입니다."
+
+msgid "Your membership has been removed."
+msgstr "회원탈퇴 되었습니다."
+
+#, python-format
+msgid "All [%(before_username)s]'s information has been deleted. And all material related to [%(before_username)s] has been deleted."
+msgstr "[%(before_username)s]의 모든 정보는 삭제 되었습니다. 그리고 [%(before_username)s] (와)과 관련된 모든 자료도 삭제 되었습니다."
+
+#, python-format
+msgid "Thank you for using %(site_name)s [%(site_domain)s]."
+msgstr "%(site_name)s [%(site_domain)s] 을 사용해 주셔서 감사합니다."
+
+#, python-format
+msgid "Hello from %(site_name)s!"
+msgstr "안녕하세요. %(site_name)s 입니다!"
+
+#, python-format
+msgid "You're receiving this e-mail because user %(user_display)s has given yours as an e-mail address to connect their account."
+msgstr "사용자 %(user_display)s 대한 이메일 검증을 위해 이메일이 수신되었습니다."
+
+#, python-format
+msgid "To confirm this is correct, go to."
+msgstr "이메일 확인을 위해 아래의 URI 를 클릭하세요."
+
+msgid "Thank you."
+msgstr "감사합니다."
+
+#, python-format
+msgid "%(e-mail)s address %(user)s have has been verify."
+msgstr " %(user)s 의 메일 주소 %(e-mail)s 에 대한 검증이 완료되었습니다."
+
+#, python-format
+msgid "Your username has been updated from [%(before_username)s] to [%(current_username)s]."
+msgstr "사용자명이 [%(before_username)s] 에서 [%(current_username)s] 로 변경 되었습니다."
+
+msgid "Your username has been updated."
+msgstr "사용자명이 변경 되었습니다."
+
+#, python-format
+msgid "Your password has been updated from [%(old_password)s] to [%(new_password)s]."
+msgstr "비밀번호가 [%(old_password)s] 에서 [%(new_password)s] 로 변경 되었습니다."
+
+msgid "If your username is an invalid update, please update your username and password through username finding and Password finding on the login."
+msgstr "사용자명이 유효하지 않은 변경인 경우 로그인 화면에서 사용자명 찾기 와 비밀번호 찾기를 통해 사용자 이름과 비밀번호를 변경 하십시오."
+
+msgid "If your Password is an invalid update, please update your username and password through Password finding and Password finding on the login."
+msgstr "비밀번호가 유효하지 않은 변경인 경우 로그인 화면에서 사용자명 찾기 와 비밀번호 찾기를 통해 사용자 이름과 비밀번호를 변경 하십시오."
+
+msgid "Your Password has been updated."
+msgstr "비밀번호가 변경 되었습니다."
+
+msgid "New password has been saved."
+msgstr "새 비밀번호가 저장되었습니다."
+
+msgid "Please enter at least 2 characters."
+msgstr "2 글자 이상 입력하세요."
+
+
+
+

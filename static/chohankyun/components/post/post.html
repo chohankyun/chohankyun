@@ -1,0 +1,309 @@
+<style>
+    body {
+        background-color: #eee;
+    }
+
+    .ta-toolbar {
+        background-color: #FFF;
+        padding: 10px 10px 5px;
+        margin-left: 0px;
+        border: 1px solid #EEE;
+    }
+
+    .ta-toolbar .btn-group {
+        margin-bottom: 5px;
+    }
+
+    .ta-editor, .white-box {
+        padding: 5px;
+        background-color: #FFF;
+        border: 1px solid #EEE;
+    }
+
+    textarea.ta-bind {
+        width: 100%;
+    }
+
+    #create_reply_editor > .ta-scroll-window > .ta-bind,
+    #update_reply_editor > .ta-scroll-window > .ta-bind {
+        height: auto;
+        min-height: 100px;
+        padding: 6px 12px;
+    }
+
+    .btn-default {
+        color: #17a2b8;
+        background-color: #fff;
+        border-color: #17a2b8;
+    }
+
+    img, iframe {
+        max-width: 100%;
+        height: auto;
+    }
+
+</style>
+<div id="post_view">
+    <form name="post_form" ng-submit="post.create(post_form)" novalidate>
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="container">
+                            <div class="row">
+                                <h5 class="w-25 text-left"><span class="badge badge-secondary">{{ 'Date' | translate }}</span></h5>
+                                <div class="col-9">
+                                    <input type="text" id="id_local_datetime" name="local_datetime" class="form-control form-control-sm" ng-disabled="true" ng-model="post.local_datetime"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="container">
+                            <div class="row">
+                                <h5 class="w-25 text-left"><span class="badge badge-secondary">{{ 'Username' | translate }}</span></h5>
+                                <div class="col-xl-9 col-lg-8 col-md-9 col-9">
+                                    <input type="text" id="id_username" name="username" class="form-control form-control-sm" ng-disabled="true" ng-model="post.model.username" required/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="container">
+                            <div class="row">
+                                <h5 class="w-25 text-left"><span class="badge badge-secondary">{{ 'Category' | translate }}</span></h5>
+                                <div class="col-9">
+                                    <select name="category" id="id_category" class="form-control form-control-sm" ng-disabled="post.is_disabled" ng-model="post.model.category"
+                                            ng-options="option.id as option.name for option in post.category_list"
+                                            ng-change="change()" required>
+                                        <option value="">--- {{ 'Please choose' | translate }} ---</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="container">
+                            <div class="row">
+                                <h5 class="w-25 text-left"><span class="badge badge-secondary">{{ 'Subject' | translate }}</span></h5>
+                                <div class="col-9">
+                                    <input type="text" id="id_subject" name="subject" class="form-control form-control-sm" ng-disabled="post.is_disabled" ng-model="post.model.subject" placeholder="{{ 'Please enter a subject.' | translate }}" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-12" ng-controller="recommend_controller as recommend" ng-show="post.model.id != ''">
+                        <div class="container">
+                            <div class="row">
+                                <h5>
+                                    <span class="badge badge-secondary">{{ 'Reply' | translate }}</span>
+                                    <span class="badge badge-info" data-ng-bind="post.model.reply_count"></span>
+                                    <span class="badge badge-secondary">{{ 'Lookup' | translate }}</span>
+                                    <span class="badge badge-info" data-ng-bind="post.model.click_count"></span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-12" ng-controller="recommend_controller as recommend" ng-show="post.model.id != ''">
+                        <div class="container">
+                            <div class="row">
+                                <h5>
+                                    <span class="badge badge-secondary">{{ 'Recommend' | translate }}</span>
+                                    <span class="badge badge-info" data-ng-bind="recommend.recommend_count"></span>
+                                    <toggle ng-if="index.authenticated" ng-model="recommend.toggle_value" ng-change="recommend.recommend()" on="<i class='fa fa-thumbs-up'></i> {{ 'Cancel' | translate }}" off="<i class='fa fa-thumbs-o-up'></i> {{ 'Recommend' | translate }}" onstyle="btn-info"
+                                            size="btn-sm"></toggle>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-hide="post.is_disabled">
+            <div class="container">
+                <div class="d-block d-sm-none" ta-toolbar="[['h1','h2','h3', 'h4', 'h5', 'h6', 'p'],['bold','italics', 'justifyLeft', 'justifyCenter', 'justifyRight', 'insertImage', 'insertLink', 'insertVideo']]" id="id_content_xs" name="content_xs" text-angular ng-model="post.model.content"
+                     ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around" style="font-size: small;" placeholder="{{ 'Please enter your contents.' | translate }}" required></div>
+                <div class="d-none d-sm-block" id="id_content" name="content" text-angular ng-model="post.model.content" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around" style="font-size: small;" placeholder="{{ 'Please enter your contents.' | translate }}"
+                     required></div>
+            </div>
+        </div>
+        <div class="row" ng-show="post.is_disabled">
+            <div class="container">
+                <div class="white-box">
+                    <div ta-bind="text" ng-model="post.model.content" ta-readonly='disabled' style="font-size: small;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-between white-box mx-0 mb-3">
+            <div class="col-3 col-sm-2 float-left">
+                <button type="button" class="btn btn-sm btn-block btn-outline-info" ng-click="post.cancel()" title="{{ 'Cancel' | translate }}">{{ 'Cancel' | translate }}</button>
+            </div>
+            <div class="col-3 col-sm-2 float-right" ng-hide="post.is_data">
+                <button type="submit" class="btn btn-sm btn-outline-primary btn-block" title="{{ 'Save' | translate }}">{{ 'Save' | translate }}</button>
+            </div>
+            <div class="offset-3 offset-sm-6 col-3 col-sm-2 float-right" ng-show="index.user.id==post.model.user && post.is_disabled">
+                <button type="button" class="btn btn-sm btn-outline-warning btn-block" ng-click="post.is_disabled = false" title="{{ 'Update' | translate }}">{{ 'Update' | translate }}</button>
+            </div>
+            <div class="col-3 col-sm-2 float-right" ng-show="index.user.id==post.model.user && post.is_disabled">
+                <button type="button" class="btn btn-sm btn-outline-danger btn-block" ng-click="post.delete(post.model.id)" title="{{ 'Delete' | translate }}">{{ 'Delete' | translate }}</button>
+            </div>
+            <div class="col-3 col-sm-2 float-right" ng-show="index.user.id==post.model.user && !post.is_disabled">
+                <button type="submit" class="btn btn-sm btn-outline-primary btn-block" title="{{ 'Save' | translate }}">{{ 'Save' | translate }}</button>
+            </div>
+        </div>
+
+    </form>
+    <div ng-controller="reply_controller as reply">
+        <div ng-show="reply.is_data">
+            <div ng-repeat="reply_data in reply.reply_list">
+                <div class="white-box text-info" style="font-size: small;">
+                    <label><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;{{ 'Reply' | translate }}</label>
+
+                    <label>&nbsp;<i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{ reply_data.username }}</label>
+                    <label>&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;{{ reply_data.local_datetime }}</label>
+                </div>
+                <div class="white-box" ng-show="reply_data.id!=reply.selected_id">
+                    <div ta-bind="text" ng-model="reply_data.content" ta-readonly='disabled' style="font-size: small;"></div>
+                </div>
+                <div ng-hide="reply_data.id!=reply.selected_id">
+                    <div class="row">
+                        <div class="container">
+                            <div class="d-block d-sm-none" ta-toolbar="[['h1','h2','h3', 'h4', 'h5', 'h6', 'p'],['bold','italics', 'justifyLeft', 'justifyCenter', 'justifyRight', 'insertImage', 'insertLink', 'insertVideo']]"
+                                 id="update_reply_editor_xs_{{ reply_data.id }}" name="update_reply_editor_xs_{{ reply_data.id }}" text-angular ng-model="reply_data.content" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around" style="font-size: small;"
+                                 placeholder="{{ 'Please enter your reply.' | translate }}" required></div>
+                            <div class="d-none d-sm-block" id="update_reply_editor_{{ reply_data.id }}" name="update_reply_editor_{{ reply_data.id }}" text-angular ng-model="reply_data.content" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around"
+                                 style="font-size: small;" placeholder="{{ 'Please enter your reply.' | translate }}"
+                                 required></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row justify-content-between white-box mx-0" ng-show="index.user.id==reply_data.user">
+                        <div class="offset-6 offset-sm-8 col-3 col-md-2 col-sm-1 float-right" ng-show="reply.selected_id==reply_data.id">
+                            <button type="submit" class="btn btn-sm btn-block btn-outline-info" ng-click="reply.selected_id=null;reply.cancel()" title="{{ 'Cancel' | translate }}">{{ 'Cancel' | translate }}</button>
+                        </div>
+                        <div class="offset-6 offset-sm-8 col-3 col-md-2 col-sm-1 float-right" ng-show="reply_data.id!=reply.selected_id">
+                            <button type="submit" class="btn btn-sm btn-block btn-outline-warning" ng-click="reply.selected_id=reply_data.id" title="{{ 'Update' | translate }}">{{ 'Update' | translate }}</button>
+                        </div>
+                        <div class="col-3 col-md-2 col-sm-1 float-right" ng-show="reply_data.id!=reply.selected_id">
+                            <button type="button" class="btn btn-sm btn-block btn-outline-danger" ng-click="reply.delete(reply_data.id)" title="{{ 'Delete' | translate }}">{{ 'Delete' | translate }}</button>
+                        </div>
+                        <div class="col-3 col-md-2 col-sm-1 float-right" ng-show="reply.selected_id==reply_data.id">
+                            <button type="submit" class="btn btn-sm btn-block btn-outline-primary" ng-click="reply.update(reply_data.id, $index)" title="{{ 'Save' | translate }}">{{ 'Save' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form role="form" ng-show="post.is_data" ng-if="index.authenticated" name="reply_form" ng-submit="reply.create(reply_form)" novalidate>
+            <div class="white-box text-info" style="font-size: small;">
+                <label><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;{{ 'Reply' | translate }}</label>
+                <label>&nbsp;<i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{ reply.model.username }}</label>
+                <label>&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;{{ reply.local_datetime }}</label>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="d-block d-sm-none" ta-toolbar="[['h1','h2','h3', 'h4', 'h5', 'h6', 'p'],['bold','italics', 'justifyLeft', 'justifyCenter', 'justifyRight', 'insertImage', 'insertLink', 'insertVideo']]" id="create_reply_editor_xs" name="create_reply_editor_xs" text-angular
+                         ng-model="reply.model.content" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around" style="font-size: small;" placeholder="{{ 'Please enter your reply.' | translate }}" required></div>
+                    <div class="d-none d-sm-block" id="create_reply_editor" name="create_reply_editor" text-angular ng-model="reply.model.content" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around" style="font-size: small;"
+                         placeholder="{{ 'Please enter your reply.' | translate }}" required></div>
+                </div>
+            </div>
+            <div class="row justify-content-between white-box mx-0 mb-3">
+                <div class="offset-9 offset-sm-10 col-3 col-md-2 col-sm-1 float-right">
+                    <button type="submit" class="btn btn-sm btn-block btn-outline-primary" title="{{ 'Save' | translate }}">{{ 'Save' | translate }}</button>
+                </div>
+            </div>
+        </form>
+        <!-- Modal -->
+        <div class="modal fade" id="reply_message_modal" tabindex="-1" role="dialog" aria-labelledby="reply_message_modal_label" aria-hidden="true">
+            <div class="modal-dialog modal-sm small" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h7 class="modal-title" id="reply_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Reply' | translate }} {{ 'Message' | translate }}</strong></h7>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body bg-info text-light">
+                        <div ng-repeat="message in reply.messages.error">
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
+                        </div>
+                        <div ng-repeat="message in reply.errors.create_reply_editor">
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents is' | translate }} {{ message | translate }}
+                        </div>
+                        <div ng-show="reply.message != null">
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ reply.message | translate }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="post_message_modal" tabindex="-1" role="dialog" aria-labelledby="post_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="post_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Post' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light">
+                <div ng-repeat="message in post.messages.error">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
+                </div>
+                <div ng-repeat="message in post.errors.category">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Category is' | translate }} {{ message | translate }}
+                </div>
+                <div ng-repeat="message in post.errors.subject">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Subject is' | translate }} {{ message | translate }}
+                </div>
+                <div ng-repeat="message in post.errors.content">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents is' | translate }} {{ message | translate }}
+                </div>
+                <div ng-show="post.message != null">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ post.message | translate }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirm_message_modal" tabindex="-1" role="dialog" aria-labelledby="confirm_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="confirm_message_modal_label"><i class="fa fa-lg fa-trash" aria-hidden="true"></i> <strong>{{ 'Delete' | translate }} {{ 'Message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-danger text-light">
+                <div>
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Are you sure you want to delete this post?' | translate }}
+                </div>
+                <div>
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'All related sub-articles will be deleted.' | translate }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-btn-confirm" type="button" class="btn btn-sm btn-outline-danger" data-dismiss="modal">{{ 'Confirm' | translate }}</button>
+                <button id="modal-btn-cancel" type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Cancel' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+

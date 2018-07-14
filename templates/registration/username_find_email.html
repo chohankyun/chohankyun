@@ -1,0 +1,10 @@
+{% load i18n %}{% autoescape off %}
+{% blocktrans %}You're receiving this e-mail because you requested a username for your user account at {{ site_name }}.{% endblocktrans %}
+
+{% trans "Your username, in case you've forgotten:" %} {{ user.get_username }}
+
+{% trans "Thank you." %}
+
+{{ site_name }} {{ domain }}
+
+{% endautoescape %}
