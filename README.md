@@ -368,6 +368,11 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
       board > catagorys 추가
       home > carousels 이미지 경로 추가 
       index > footer / header 추가
+      
+### ALLOWED_HOSTS 임시 설정
+* 원래는 127.0.0.1 과 도메인 추가 
+* 임시 테스트를 위해서 서버(EC2) 아이피 추가
+
  
 
 
