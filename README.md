@@ -127,8 +127,8 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 ### windows 환경변수 설정  
 * 프로젝트 > chohankyun > chohankyun > settings.py 파일의 환경 변수 확인
 * os.environ['DB_HOST'] 을 위한 windows 환경변수 DB_HOST=127.0.0.1
-* os.environ['DB_PASSWORD'] 을 위한 windows 환경변수 DB_PASSWORD=*******
-* os.environ['EMAIL_HOST_PASSWORD'] 을 위한 windows 환경변수 EMAIL_HOST_PASSWORD=******
+* os.environ['DB_PASSWORD'] 을 위한 windows 환경변수 DB_PASSWORD=*********
+* os.environ['EMAIL_HOST_PASSWORD'] 을 위한 windows 환경변수 EMAIL_HOST_PASSWORD=********
 
 ### log 폴더 생성  
 * window 탐색기 상에서 chohankyun 같은 레벨에 log 폴더 생성
@@ -310,7 +310,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 * sudo mysql -u root
         
       create database data_db;
-      create user 'data_user'@'%' identified by '패스워드';
+      create user 'data_user'@'%' identified by '비밀번호';
       grant all privileges on data_db.* to data_user@'%';
       flush privileges;
       
@@ -339,7 +339,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
        
        export DB_HOST='127.0.0.1'
        export DB_PASSWORD='********'
-       export EMAIL_HOST_PASSWORD='******'
+       export EMAIL_HOST_PASSWORD='*********'
        
  * sudo apachectl stop
  * sudo apachectl start
