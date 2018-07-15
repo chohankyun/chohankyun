@@ -163,6 +163,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
       home > carousels 이미지 경로 추가 
       index > footer 추가
       index > header 추가
+      사이트 > 사이트들 수정 (default:example.com )
 
 ****
 ## 운영환경  
@@ -572,6 +573,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
       board > catagorys 추가
       home > carousels 이미지 경로 추가 
       index > footer / header 추가
+      사이트 > 사이트들 수정 (default:example.com )
       
 
  
