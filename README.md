@@ -363,7 +363,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 * 브라우저에서 elastic ip 로 접근 
 
 ### 도메인을 EC2 에 직접 연결 후 사용
-* 도메인 구입 사이트의 관리 페이지에서 DNS 에 A(address) record 추가
+* 도메인 구입 사이트의 관리 페이지에서 DNS 에 A(address) record 추가 (가비아)
 
       타입: A , 호스트 : @  ,  값 : elastic ip
       타임: A , 호스트 : *  ,  값 : elastic ip
