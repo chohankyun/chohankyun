@@ -17,13 +17,15 @@ chohankyun.controller('search_controller', function ($scope, $rootScope, $locati
 
     var post_list = function (page) {
         if (!angular.isUndefined($routeParams['search_word'])) {
+            search_controller.errors = [];
+
             search_service.post_list($routeParams['search_word'], search_controller.selected_order, page).then(
                 function (data) {
                     search_controller.search_list = data;
                     search_controller.total = data.length;
                 },
                 function (error) {
-                    search_controller.message = error.detail;
+                    search_controller.errors = error;
                     $('#search_message_modal').modal('show')
                 });
         }
@@ -32,12 +34,14 @@ chohankyun.controller('search_controller', function ($scope, $rootScope, $locati
     post_list(init_page);
 
     search_controller.click_item = function (search_id) {
+        search_controller.errors = [];
+
         post_service.increase_click_count(search_id).then(
             function (data) {
                 $location.path('/post/' + search_id);
             },
             function (error) {
-                search_controller.message = error.detail;
+                search_controller.errors = error;
                 $('#search_message_modal').modal('show')
             });
     }

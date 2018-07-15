@@ -63,7 +63,7 @@ chohankyun.controller('post_controller', function ($scope, $q, $window, $routePa
                         $location.path($scope.index.category);
                     },
                     function (error) {
-                        post_controller.message = error.detail;
+                        post_controller.errors = error;
                         $('#post_message_modal').modal('show');
                     });
             } else {
@@ -72,7 +72,7 @@ chohankyun.controller('post_controller', function ($scope, $q, $window, $routePa
                         $location.path($scope.index.category);
                     },
                     function (error) {
-                        post_controller.message = error.detail;
+                        post_controller.errors = error;
                         $('#post_message_modal').modal('show');
                     });
             }
@@ -90,7 +90,7 @@ chohankyun.controller('post_controller', function ($scope, $q, $window, $routePa
                     $window.location.reload();
                 },
                 function (error) {
-                    post_controller.message = error.detail;
+                    post_controller.errors = error;
                     $('#post_message_modal').modal('show');
                 });
         });

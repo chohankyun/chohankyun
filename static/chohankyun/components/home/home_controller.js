@@ -24,7 +24,8 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
             }
         },
         function (error) {
-            home_controller.message = error.detail;
+            home_controller.errors = [];
+            home_controller.errors = error;
             $('#home_message_modal').modal('show')
         });
 
@@ -33,7 +34,8 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
             home_controller.category_list = [{'id': 'home', 'name': 'Home'}, {'id': 'all', 'name': 'All'}].concat(data);
         },
         function (error) {
-            home_controller.message = error.detail;
+            home_controller.errors = [];
+            home_controller.errors = error;
             $('#home_message_modal').modal('show')
         });
 
@@ -43,7 +45,8 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
                 home_controller[order] = data;
             },
             function (error) {
-                home_controller.message = error.detail;
+                home_controller.errors = [];
+                home_controller.errors = error;
                 $('#home_message_modal').modal('show')
             });
     });
@@ -55,7 +58,8 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
                     home_controller[order] = data;
                 },
                 function (error) {
-                    home_controller.message = error.detail;
+                    home_controller.errors = [];
+                    home_controller.errors = error;
                     $('#home_message_modal').modal('show')
                 });
         });
@@ -67,7 +71,8 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
                 $location.path('/post/' + post_id);
             },
             function (error) {
-                home_controller.message = error.detail;
+                home_controller.errors = [];
+                home_controller.errors = error;
                 $('#home_message_modal').modal('show')
             });
     }

@@ -29,7 +29,7 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
                 reply_controller.is_data = true;
             },
             function (error) {
-                reply_controller.message = error.detail;
+                reply_controller.errors = error;
                 $('#reply_message_modal').modal('show');
             });
 
@@ -52,7 +52,7 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
                     $route.reload();
                 },
                 function (error) {
-                    reply_controller.message = error.detail;
+                    reply_controller.errors = error;
                     $('#reply_message_modal').modal('show');
                 });
         }
@@ -77,7 +77,7 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
                 $route.reload();
             },
             function (error) {
-                reply_controller.message = error.detail;
+                reply_controller.errors = error;
                 $('#reply_message_modal').modal('show')
             });
     }
@@ -91,7 +91,7 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
                     $window.location.reload();
                 },
                 function (error) {
-                    reply_controller.message = error.detail;
+                    reply_controller.errors = error;
                     $('#reply_message_modal').modal('show');
                 });
         });

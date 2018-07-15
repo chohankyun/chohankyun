@@ -228,14 +228,14 @@
                         </button>
                     </div>
                     <div class="modal-body bg-info text-light">
-                        <div ng-repeat="message in reply.messages.error">
-                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
-                        </div>
                         <div ng-repeat="message in reply.errors.create_reply_editor">
-                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents is' | translate }} {{ message | translate }}
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
                         </div>
-                        <div ng-show="reply.message != null">
-                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ reply.message | translate }}
+                        <div ng-repeat="message in reply.errors.content">
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
+                        </div>
+                        <div ng-repeat="message in reply.errors.text_content">
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -257,20 +257,17 @@
                 </button>
             </div>
             <div class="modal-body bg-info text-light">
-                <div ng-repeat="message in post.messages.error">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
-                </div>
                 <div ng-repeat="message in post.errors.category">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Category is' | translate }} {{ message | translate }}
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Category' | translate }} : {{ message | translate }}
                 </div>
                 <div ng-repeat="message in post.errors.subject">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Subject is' | translate }} {{ message | translate }}
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Subject' | translate }} : {{ message | translate }}
                 </div>
                 <div ng-repeat="message in post.errors.content">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents is' | translate }} {{ message | translate }}
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
                 </div>
-                <div ng-show="post.message != null">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ post.message | translate }}
+                <div ng-repeat="message in post.errors.text_content">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
                 </div>
             </div>
             <div class="modal-footer">

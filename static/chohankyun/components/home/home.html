@@ -180,7 +180,9 @@
                 </button>
             </div>
             <div class="modal-body bg-info text-light">
-                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ home.message | translate }}
+                <div ng-repeat="message in home.errors">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
