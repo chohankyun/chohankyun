@@ -370,6 +370,103 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
       sudo apachectl restart
       
 * 브라우저에서 도메인으로 접근      
+
+### elb (ssl 인증서), ec2 구성
+* aws 에서 발행하는 인증서 생성
+
+      chohankyun.com
+      *.chohankyun.com (추가 도메인)
+      
+* e-mail 인증을 사용하고, 위의 두개의 도메인을 포함 하는 인증서 생성    
+* elb 생성 시 https 리스너 추가하고, 생성 된 ssl 를 추가
+* elb 생성 후 elb dns 주소로 접속 테스트
+  
+      http://elb dns 주소 
+       
+* 도메인 발급 회사의 dns 설정 화면에서 cname 레코드 등록
+* cname 으로 elb 등록 (가비아)
+
+      타입: cname , 호스트 : @  ,  값 : elb dns 주소 (끝에 "."  추가)
+      타임: cname , 호스트 : *  ,  값 : elb dns 주소 (끝에 "."  추가)
+      
+* http 테스트 
+      
+      http://chohankyun.com
+      http://www.chohankyun.com
+      
+* https 테스트
+
+      https://chohankyun.com
+      https://www.chohankyun.com
+      
+* http 요청 시 https 로 redirect 변경을 위한 rewite 모듈 로드
+     
+      ec2 ssh 접속
+      cd /etc/apache2
+      cd mods-enabled
+      sudo ln -f -s ../mods-available/rewrite.load rewrite.load
+      
+ 
+* http 요청 시 https 로 redirect 변경을 위한 apache2 설정 변경
+* cd /etc/apache2/sites-available
+* sudo vi chohankyun.conf
+
+      <VirtualHost *:80>
+              ServerName www.chohankyun.com
+              ServerAlias chohankyun.com
+              ServerAdmin webmaster@localhost
+              DocumentRoot /home/ubuntu/app/web/
+
+              ErrorLog ${APACHE_LOG_DIR}/error.log
+              CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+              <Directory /home/ubuntu/app/web/>
+                     Order allow,deny
+                     Allow from all
+              </Directory>
+
+              WSGIDaemonProcess chohankyun.com user=ubuntu group=ubuntu python-path=/home/ubuntu/app/web
+              WSGIProcessGroup chohankyun.com
+
+              WSGIScriptAlias / /home/ubuntu/app/web/chohankyun/wsgi.py
+
+              <Directory /home/ubuntu/app/web/chohankyun/>
+                      <Files wsgi.py>
+                             Allow from all
+                             Require all granted
+                      </Files>
+              </Directory>
+
+              Alias /static/admin/ /usr/local/lib/python3.6/dist-packages/django/contrib/admin/static/admin/
+
+              <Directory /usr/local/lib/python3.6/dist-packages/django/contrib/admin/static/admin/>
+                     Allow from all
+                     Require all granted
+              </Directory>
+
+              Alias /static/ /home/ubuntu/app/web/static/
+
+              <Directory /home/ubuntu/app/web/static/>
+                     Allow from all
+                     Require all granted
+              </Directory>
+
+              Alias /media/ /home/ubuntu/app/web/media/
+
+              <Directory /home/ubuntu/app/web/media/>
+                     Allow from all
+                     Require all granted
+              </Directory> 
+              
+              # for aws elb ssl
+              RewriteEngine On
+              RewriteCond %{HTTP:X-Forwarded-Proto} =http
+              RewriteRule .* https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
+            
+      </VirtualHost>
+              WSGISocketPrefix /var/run/wsgi
+       
+* sudo apachectl restart
   
 ### aws route53, elb (ssl 인증서), ec2 구성
 * aws 에서 발행하는 인증서 생성
