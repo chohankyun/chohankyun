@@ -1,5 +1,5 @@
 from django.contrib import admin
-from index.models import Header ,Footer
+from index.models import Header, Footer
 
 
 class HeaderAdmin(admin.ModelAdmin):

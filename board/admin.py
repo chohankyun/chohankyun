@@ -13,7 +13,7 @@ admin.site.register(Category, CategoryAdmin)
 
 class PostAdmin(admin.ModelAdmin):
     readonly_fields = ['created_datetime', 'changed_datetime']
-    list_display = [field.name for field in Post._meta.fields]
+    list_display = [field.name for field in Post._meta.fields if field.name != 'content']
 
 
 admin.site.register(Post, PostAdmin)
@@ -21,7 +21,7 @@ admin.site.register(Post, PostAdmin)
 
 class ReplyAdmin(admin.ModelAdmin):
     readonly_fields = ['created_datetime', 'changed_datetime']
-    list_display = [field.name for field in Reply._meta.fields]
+    list_display = [field.name for field in Reply._meta.fields if field.name != 'content']
 
 
 admin.site.register(Reply, ReplyAdmin)
