@@ -94,6 +94,7 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 * pycharm professional   
 * mariadb 설치 (utf-8 설정)  
 * git 설치 (utf-8 및 unix 설정)  
+* gettext 설치 (다국어 처리)
 
 ### pycharm 설정
 * 초기화면 > configure > settings > appearance & behavior > appearance 의 theme 를 darcula 설정  
