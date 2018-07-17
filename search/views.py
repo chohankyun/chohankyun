@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
 from collections import OrderedDict
-import urllib.parse
 
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q, F
@@ -36,13 +35,13 @@ class SearchPostByOrder(ListAPIView):
     serializer_class = SearchSerializer
 
     def get_queryset(self):
-        if self.kwargs.get('search_word') is None:
+        search_word = self.kwargs.get('search_word')
+
+        if search_word is None:
             raise exceptions.ParseError(_('Please enter at least 2 characters.'))
 
-        if self.kwargs.get('search_word') == "":
+        if search_word == "":
             raise exceptions.ParseError(_('Please enter at least 2 characters.'))
-
-        search_word = urllib.parse.unquote(self.kwargs.get('search_word'))
 
         if len(search_word) < 2:
             raise exceptions.ParseError(_('Please enter at least 2 characters.'))
