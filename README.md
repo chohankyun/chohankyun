@@ -287,6 +287,10 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
                      Allow from all
                      Require all granted
               </Directory>
+              
+              # for search
+              AllowEncodedSlashes On
+              
       </VirtualHost>
               WSGISocketPrefix /var/run/wsgi
         
@@ -460,7 +464,10 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
               <Directory /home/ubuntu/app/web/media/>
                      Allow from all
                      Require all granted
-              </Directory> 
+              </Directory>
+              
+              # for search
+              AllowEncodedSlashes On 
               
               # for aws elb ssl
               RewriteEngine On
@@ -554,6 +561,9 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
                      Allow from all
                      Require all granted
               </Directory> 
+              
+              # for search
+              AllowEncodedSlashes On
               
               # for aws elb ssl
               RewriteEngine On

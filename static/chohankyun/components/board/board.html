@@ -18,13 +18,13 @@
     <div class="col-lg-3 col-md-6 col-sm-6 portfolio-item small" ng-repeat="post in board.post_list.results">
         <div class="card h-100 site-polaroid">
             <a href ng-click="board.click_post(post.id); index.select_index_item='read'"><img class="card-img-top site-thumbnail" ng-src="{{ post.first_image_source ? post.first_image_source : 'http://via.placeholder.com/250x150?text=Text Only'}}"></a>
-            <div class="card-body">
+            <div class="card-body text-center px-1 py-3">
                 <p class="card-text text-truncate font-weight-bold">
                     <a style="color: #5bc0de" href ng-click="board.click_post(post.id); index.select_index_item='read'">{{ post.subject }}</a>
                 </p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item text-truncate text-white bg-secondary">
+                <li class="list-group-item text-white bg-secondary text-center px-1 py-2">
                     <div class="cart-text">
                         <div>
                             <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ post.category_name }}
