@@ -56,7 +56,7 @@ chohankyun.controller('index_controller', function ($rootScope, $scope, $window,
 
     index_controller.search = function () {
         if (index_controller.search_word != null && index_controller.search_word != '' && index_controller.search_word.length >= 2) {
-            $location.path("/search/" + encodeURI(index_controller.search_word));
+            $location.path("/search/" + encodeURIComponent(index_controller.search_word));
         } else {
             index_controller.message = 'Please enter at least 2 characters.';
             $('#index_message_modal').modal('show')
