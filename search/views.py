@@ -42,7 +42,9 @@ class SearchPostByOrder(ListAPIView):
         if self.kwargs.get('search_word') == "":
             raise exceptions.ParseError(_('Please enter at least 2 characters.'))
 
+        logger.info("before decode:"+self.kwargs.get('search_word'))
         search_word = urllib.parse.unquote(self.kwargs.get('search_word'))
+        logger.info("after decode:" + self.kwargs.get('search_word'))
 
         if len(search_word) < 2:
             raise exceptions.ParseError(_('Please enter at least 2 characters.'))
