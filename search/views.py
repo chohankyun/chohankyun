@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from collections import OrderedDict
+import urllib.parse
 
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q, F
@@ -35,11 +36,19 @@ class SearchPostByOrder(ListAPIView):
     serializer_class = SearchSerializer
 
     def get_queryset(self):
-        if self.kwargs.get('search_word') is not None and self.kwargs.get('search_word') != "" and len(self.kwargs.get('search_word')) >= 2:
-            return Post.objects.filter(
-                Q(subject__contains=self.kwargs.get('search_word')) |
-                Q(text_content__contains=self.kwargs.get('search_word')) |
-                Q(reply__text_content__contains=self.kwargs.get('search_word'))
-            ).order_by('-%s' % self.kwargs.get('order')).all().annotate(reply_content=F('reply__content'))
-        else:
+        if self.kwargs.get('search_word') is None:
             raise exceptions.ParseError(_('Please enter at least 2 characters.'))
+
+        if self.kwargs.get('search_word') == "":
+            raise exceptions.ParseError(_('Please enter at least 2 characters.'))
+
+        search_word = urllib.parse.unquote(self.kwargs.get('search_word'))
+
+        if len(search_word) < 2:
+            raise exceptions.ParseError(_('Please enter at least 2 characters.'))
+
+        return Post.objects.filter(
+            Q(subject__contains=search_word) |
+            Q(text_content__contains=search_word) |
+            Q(reply__text_content__contains=search_word)
+        ).order_by('-%s' % self.kwargs.get('order')).all().annotate(reply_content=F('reply__content'))
