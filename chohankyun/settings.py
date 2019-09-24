@@ -94,11 +94,11 @@ WSGI_APPLICATION = 'chohankyun.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': os.environ['DB_HOST'],
+        'HOST': os.environ['CHOHANKYUN_DB_HOST'],
         'PORT': 3306,
-        'NAME': 'data_db',
-        'USER': 'data_user',
-        'PASSWORD': os.environ['DB_PASSWORD'],
+        'NAME': os.environ['CHOHANKYUN_DB_NAME'],
+        'USER': os.environ['CHOHANKYUN_DB_USER'],
+        'PASSWORD': os.environ['CHOHANKYUN_DB_PASSWORD'],
     }
 }
 
@@ -210,7 +210,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'chohankyun'
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_HOST_PASSWORD = os.environ['CHOHANKYUN_EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = 'chohankyun@gmail.com'
 
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
