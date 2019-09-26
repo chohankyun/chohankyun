@@ -32,7 +32,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_local_datetime(obj):
-        return l10n.localize(obj.changed_datetime)
+        return l10n.localize(obj.updated_datetime)
 
 
 class ReplySerializer(serializers.ModelSerializer):
@@ -51,7 +51,7 @@ class ReplySerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_local_datetime(obj):
-        return l10n.localize(obj.changed_datetime)
+        return l10n.localize(obj.updated_datetime)
 
 
 class RecommendSerializer(serializers.ModelSerializer):

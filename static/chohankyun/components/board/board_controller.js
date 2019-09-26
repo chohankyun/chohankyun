@@ -9,9 +9,9 @@ chohankyun.controller('board_controller', function ($scope, $route, $rootScope, 
     $scope.index.select_index_item = null;
     board_controller.my_post = null;
     board_controller.category = null;
-    board_controller.selected_order = 'changed_datetime';
+    board_controller.selected_order = 'updated_datetime';
     board_controller.order_list = [
-        {'id': 'changed_datetime', 'name': 'New'},
+        {'id': 'updated_datetime', 'name': 'New'},
         {'id': 'recommend_count', 'name': 'Recommend'},
         {'id': 'reply_count', 'name': 'Reply'},
         {'id': 'click_count', 'name': 'Lookup'}

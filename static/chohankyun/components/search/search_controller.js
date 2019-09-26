@@ -7,9 +7,9 @@ chohankyun.controller('search_controller', function ($scope, $rootScope, $locati
     var init_page = 1;
 
     search_controller.total = null;
-    search_controller.selected_order = 'changed_datetime';
+    search_controller.selected_order = 'updated_datetime';
     search_controller.order_list = [
-        {'id': 'changed_datetime', 'name': 'New'},
+        {'id': 'updated_datetime', 'name': 'New'},
         {'id': 'recommend_count', 'name': 'Recommend'},
         {'id': 'reply_count', 'name': 'Reply'},
         {'id': 'click_count', 'name': 'Lookup'}

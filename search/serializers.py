@@ -28,7 +28,7 @@ class SearchSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_local_datetime(obj):
-        return l10n.localize(obj.changed_datetime)
+        return l10n.localize(obj.updated_datetime)
 
     @staticmethod
     def get_reply_content(obj):

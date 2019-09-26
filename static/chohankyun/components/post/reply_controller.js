@@ -63,7 +63,7 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
         reply_controller.messages = [];
 
         reply_controller.model = reply_controller.reply_list[index];
-        reply_controller.model.changed_datetime = '';
+        reply_controller.model.updated_datetime = '';
         reply_controller.model.created_datetime = '';
 
         if (angular.isUndefined(reply_controller.model.content)) {

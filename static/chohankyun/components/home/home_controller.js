@@ -4,7 +4,7 @@ var chohankyun = angular.module('chohankyun');
 
 chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $location, $routeParams, home_service, post_service, category_model) {
     var home_controller = this;
-    var order_list = ['changed_datetime', 'click_count', 'reply_count', 'recommend_count'];
+    var order_list = ['updated_datetime', 'click_count', 'reply_count', 'recommend_count'];
     var carousel_s = [
         {'image_source': 'http://via.placeholder.com/1600x400?text=First slide', 'description': 'default first image source'},
         {'image_source': 'http://via.placeholder.com/1600x400?text=Second slide', 'description': 'default second image source'},
