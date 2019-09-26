@@ -3,6 +3,7 @@ import logging
 from collections import OrderedDict
 
 from bs4 import BeautifulSoup
+from django.db.models import F
 from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView
 from rest_framework.pagination import PageNumberPagination
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 class CategoryList(ListAPIView):
     permission_classes = (AllowAny,)
-    queryset = Category.objects.order_by('priority').all()
+    queryset = Category.objects.order_by('priority')
     serializer_class = CategorySerializer
 
 
@@ -45,9 +46,13 @@ class PostListByCategoryNOrder(ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        if 'all' == self.kwargs.get('category'):
-            return Post.objects.order_by('-%s' % self.kwargs.get('order')).all()
-        return Post.objects.filter(category=self.kwargs.get('category')).order_by('-%s' % self.kwargs.get('order')).all()
+        return self.get_post_by_category_and_order()
+
+    def get_post_by_category_and_order(self):
+        queryset = Post.objects.order_by('-%s' % self.kwargs.get('order'))
+        if 'all' != self.kwargs.get('category'):
+            queryset = queryset.filter(category=self.kwargs.get('category'))
+        return queryset
 
 
 class MyPostListByCategoryNOrder(ListAPIView):
@@ -56,9 +61,30 @@ class MyPostListByCategoryNOrder(ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        if 'all' == self.kwargs.get('category'):
-            return Post.objects.filter(user=self.request.user.id).order_by('-%s' % self.kwargs.get('order')).all()
-        return Post.objects.filter(user=self.request.user.id, category=self.kwargs.get('category')).order_by('-%s' % self.kwargs.get('order')).all()
+        return self.get_my_post_by_category_and_order()
+
+    def get_my_post_by_category_and_order(self):
+        queryset = Post.objects.filter(user=self.request.user.id)
+        queryset = queryset.order_by('-%s' % self.kwargs.get('order'))
+        if 'all' != self.kwargs.get('category'):
+            queryset.filter(category=self.kwargs.get('category'))
+        return queryset
+
+
+class HtmlContent:
+    @staticmethod
+    def add_content(request):
+        obj_content = BeautifulSoup(request.data['content'], 'html.parser')
+        request.data['text_content'] = obj_content.get_text()
+        return request
+
+    @staticmethod
+    def add_content_with_image(request):
+        obj_content = BeautifulSoup(request.data['content'], 'html.parser')
+        request.data['text_content'] = obj_content.get_text()
+        image = obj_content.img
+        request.data['first_image_source'] = image['src'] if image else ''
+        return request
 
 
 class PostCreate(CreateAPIView):
@@ -68,15 +94,7 @@ class PostCreate(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         request.data['user'] = request.user.id
-        obj_content = BeautifulSoup(request.data['content'], 'html.parser')
-        request.data['text_content'] = obj_content.get_text()
-        image = obj_content.img
-
-        if image:
-            request.data['first_image_source'] = image['src']
-        else:
-            request.data['first_image_source'] = ''
-
+        request = HtmlContent.add_content_with_image(request)
         return super(PostCreate, self).create(request, *args, **kwargs)
 
 
@@ -87,15 +105,7 @@ class PostUpdate(UpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         request.data['user'] = request.user.id
-        obj_content = BeautifulSoup(request.data['content'], 'html.parser')
-        request.data['text_content'] = obj_content.get_text()
-        image = obj_content.img
-
-        if image:
-            request.data['first_image_source'] = image['src']
-        else:
-            request.data['first_image_source'] = ''
-
+        request = HtmlContent.add_content_with_image(request)
         return super(PostUpdate, self).partial_update(request, *args, **kwargs)
 
 
@@ -110,11 +120,21 @@ class PostIncreaseClickCount(RetrieveAPIView):
     serializer_class = PostSerializer
 
     def get(self, request, *args, **kwargs):
-        count = Post.objects.filter(id=kwargs.get('pk')).values()[0].get('click_count')
-        count = int(count) + 1
-        increase_count = {'click_count': count}
-        Post.objects.filter(id=kwargs.get('pk')).update(**increase_count)
+        self.increase_click_count()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def increase_click_count(self):
+        post = Post.objects.get(pk=self.kwargs.get('pk'))
+        post.click_count = F('click_count') + 1
+        post.save()
+
+
+class ReplyCount:
+    @staticmethod
+    def save(post_id):
+        post = Post.objects.get(pk=post_id)
+        post.reply_count = Reply.objects.filter(post=post_id).count()
+        post.save()
 
 
 class ReplyCreate(CreateAPIView):
@@ -124,14 +144,11 @@ class ReplyCreate(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         request.data['user'] = request.user.id
-        obj_content = BeautifulSoup(request.data['content'], 'html.parser')
-        request.data['text_content'] = obj_content.get_text()
+        request = HtmlContent.add_content(request)
         return super(ReplyCreate, self).create(request, *args, **kwargs)
 
     def get_success_headers(self, data):
-        post = Post.objects.get(pk=data.get('post'))
-        post.reply_count = Reply.objects.filter(post=data.get('post')).count()
-        post.save()
+        ReplyCount.save(data.get('post'))
         return super(ReplyCreate, self).get_success_headers(data)
 
 
@@ -140,7 +157,12 @@ class ReplyList(ListAPIView):
     serializer_class = ReplySerializer
 
     def get_queryset(self):
-        return Reply.objects.filter(post=self.kwargs.get('post_id')).order_by('-changed_datetime').all()
+        return self.get_reply_by_post()
+
+    def get_reply_by_post(self):
+        queryset = Reply.objects.filter(post=self.kwargs.get('post_id'))
+        queryset = queryset.order_by('-changed_datetime')
+        return queryset
 
 
 class ReplyUpdate(UpdateAPIView):
@@ -150,8 +172,7 @@ class ReplyUpdate(UpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         request.data['user'] = request.user.id
-        obj_content = BeautifulSoup(request.data['content'], 'html.parser')
-        request.data['text_content'] = obj_content.get_text()
+        request = HtmlContent.add_content(request)
         return super(ReplyUpdate, self).partial_update(request, *args, **kwargs)
 
 
@@ -163,19 +184,26 @@ class ReplyDelete(DestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        post = Post.objects.get(pk=instance.post.id)
-        post.reply_count = Reply.objects.filter(post=instance.post.id).count()
-        post.save()
+        ReplyCount.save(instance.post.id)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class RecommendCount(RetrieveAPIView):
+class RecommendCount:
+    @staticmethod
+    def save(post_id):
+        post = Post.objects.get(pk=post_id)
+        post.recommend_count = Recommend.objects.filter(post=post_id).count()
+        post.save()
+
+
+class RecommendCountNOwner(RetrieveAPIView):
     permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
-        recommend_count = Recommend.objects.filter(post=self.kwargs.get('post_id')).count()
-        recommend = Recommend.objects.filter(user=request.user.id, post=self.kwargs.get('post_id')).first()
-        return Response({'recommend_count': recommend_count, 'is_recommend': True if recommend else False})
+        queryset = Recommend.objects.filter(post=self.kwargs.get('post_id'))
+        recommend_count = queryset.count()
+        is_recommend = queryset.filter(user=request.user.id).exists()
+        return Response({'recommend_count': recommend_count, 'is_recommend': is_recommend})
 
 
 class RecommendCreate(CreateAPIView):
@@ -188,9 +216,7 @@ class RecommendCreate(CreateAPIView):
         return super(RecommendCreate, self).create(request, *args, **kwargs)
 
     def get_success_headers(self, data):
-        post = Post.objects.get(pk=data.get('post'))
-        post.recommend_count = Recommend.objects.filter(post=data.get('post')).count()
-        post.save()
+        RecommendCount.save(data.get('post'))
         return super(RecommendCreate, self).get_success_headers(data)
 
 
@@ -198,9 +224,9 @@ class RecommendDelete(DestroyAPIView):
     permission_classes = (IsAuthenticated,)
 
     def destroy(self, request, *args, **kwargs):
-        instance = Recommend.objects.filter(user=request.user.id, post=self.kwargs.get('post_id')).first()
+        queryset = Recommend.objects.filter(user=request.user.id)
+        queryset = queryset.filter(post=self.kwargs.get('post_id'))
+        instance = queryset.first()
         self.perform_destroy(instance)
-        post = Post.objects.get(pk=self.kwargs.get('post_id'))
-        post.recommend_count = Recommend.objects.filter(post=self.kwargs.get('post_id')).count()
-        post.save()
+        RecommendCount.save(self.kwargs.get('post_id'))
         return Response(status=status.HTTP_204_NO_CONTENT)

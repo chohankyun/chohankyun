@@ -15,7 +15,7 @@ class HeaderSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_local_datetime(obj):
-        return l10n.localize(obj.changed_datetime)
+        return l10n.localize(obj.updated_datetime)
 
 
 class FooterSerializer(serializers.ModelSerializer):
@@ -28,4 +28,4 @@ class FooterSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_local_datetime(obj):
-        return l10n.localize(obj.changed_datetime)
+        return l10n.localize(obj.updated_datetime)

@@ -11,6 +11,9 @@ class Category(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     changed_datetime = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'category'
+
 
 class Post(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
@@ -25,6 +28,9 @@ class Post(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     changed_datetime = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'post'
+
 
 class Reply(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
@@ -34,9 +40,15 @@ class Reply(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     changed_datetime = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'reply'
+
 
 class Recommend(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     created_datetime = models.DateTimeField(auto_now_add=True)
     changed_datetime = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'recommend'

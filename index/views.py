@@ -14,6 +14,10 @@ class HeaderDetail(RetrieveAPIView):
     serializer_class = HeaderSerializer
 
     def get_object(self):
+        return self.get_last_header_without_param()
+
+    @staticmethod
+    def get_last_header_without_param():
         return Header.objects.last()
 
 
@@ -22,4 +26,8 @@ class FooterDetail(RetrieveAPIView):
     serializer_class = FooterSerializer
 
     def get_object(self):
+        return self.get_last_footer_without_param()
+
+    @staticmethod
+    def get_last_footer_without_param():
         return Footer.objects.last()

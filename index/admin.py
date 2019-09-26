@@ -3,7 +3,7 @@ from index.models import Header, Footer
 
 
 class HeaderAdmin(admin.ModelAdmin):
-    readonly_fields = ['created_datetime', 'changed_datetime']
+    readonly_fields = ['created_datetime', 'updated_datetime']
     list_display = [field.name for field in Header._meta.fields]
 
 
@@ -11,7 +11,7 @@ admin.site.register(Header, HeaderAdmin)
 
 
 class FooterAdmin(admin.ModelAdmin):
-    readonly_fields = ['created_datetime', 'changed_datetime']
+    readonly_fields = ['created_datetime', 'updated_datetime']
     list_display = [field.name for field in Footer._meta.fields]
 
 

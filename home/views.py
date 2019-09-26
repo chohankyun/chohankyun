@@ -13,17 +13,29 @@ logger = logging.getLogger(__name__)
 
 class CarouselList(ListAPIView):
     permission_classes = (AllowAny,)
-    queryset = Carousel.objects.filter(priority__in=[1, 2, 3]).order_by('priority').all()
     serializer_class = CarouselSerializer
+
+    def get_queryset(self):
+        return self.get_three_carousel_by_priority()
+
+    @staticmethod
+    def get_three_carousel_by_priority():
+        queryset = Carousel.objects.filter(priority__in=[1, 2, 3])
+        queryset = queryset.order_by('priority')
+        return queryset
 
 
 class PostListByOrder(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = PostSerializer
 
-    # 홈 값은 각 카테코리 별로 4개만 조회 합니다.
     def get_queryset(self):
-        return Post.objects.order_by('-%s' % self.kwargs.get('order')).all()[:4]
+        return self.get_four_post_by_order()
+
+    def get_four_post_by_order(self):
+        queryset = Post.objects.order_by('-%s' % self.kwargs.get('order'))
+        queryset = queryset[:4]
+        return queryset
 
 
 class MyPostListByOrder(ListAPIView):
@@ -31,4 +43,10 @@ class MyPostListByOrder(ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        return Post.objects.filter(user=self.request.user.id).order_by('-%s' % self.kwargs.get('order')).all()[:4]
+        return self.get_four_post_by_user_and_order()
+
+    def get_four_post_by_user_and_order(self):
+        queryset = Post.objects.filter(user=self.request.user.id)
+        queryset = queryset.order_by('-%s' % self.kwargs.get('order'))
+        queryset = queryset[:4]
+        return queryset

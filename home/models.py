@@ -7,4 +7,11 @@ class Carousel(models.Model):
     priority = models.CharField(max_length=1, blank=False, default=0, help_text="사용(1, 2, 3), 사용안함(0)")
     description = models.CharField(max_length=200, blank=True)
     created_datetime = models.DateTimeField(auto_now_add=True)
-    changed_datetime = models.DateTimeField(auto_now=True)
+    updated_datetime = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'carousel'
+
+        indexes = [
+            models.Index(fields=['priority']),
+        ]

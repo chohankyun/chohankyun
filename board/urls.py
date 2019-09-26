@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 from board.views import CategoryList, PostDetail, PostCreate, PostUpdate, PostDelete
 from board.views import PostListByCategoryNOrder, MyPostListByCategoryNOrder, PostIncreaseClickCount
-from board.views import RecommendCount, RecommendCreate, RecommendDelete
+from board.views import RecommendCountNOwner, RecommendCreate, RecommendDelete
 from board.views import ReplyCreate, ReplyList, ReplyDelete, ReplyUpdate
 
 urlpatterns = [
@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^reply/list/(?P<post_id>\w+)/$', ReplyList.as_view(), name='board_reply_list'),
     url(r'^reply/update/(?P<pk>\w+)/$', ReplyUpdate.as_view(), name='board_reply_update'),
     url(r'^reply/delete/(?P<pk>\w+)/$', ReplyDelete.as_view(), name='board_reply_delete'),
-    url(r'^recommend/count/(?P<post_id>\w+)/$', RecommendCount.as_view(), name='board_recommend_count'),
+    url(r'^recommend/count/(?P<post_id>\w+)/$', RecommendCountNOwner.as_view(), name='board_recommend_count_n_owner'),
     url(r'^recommend/create/$', RecommendCreate.as_view(), name='board_recommend_create'),
     url(r'^recommend/delete/(?P<post_id>\w+)/$', RecommendDelete.as_view(), name='board_recommend_delete'),
 ]
