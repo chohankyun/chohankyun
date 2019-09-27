@@ -6,6 +6,7 @@ from django.forms import TextInput
 from home.models import Carousel
 
 
+@admin.register(Carousel)
 class CarouselAdmin(admin.ModelAdmin):
     readonly_fields = ['created_datetime', 'updated_datetime']
     list_display = [field.name for field in Carousel._meta.fields]
@@ -13,6 +14,3 @@ class CarouselAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '150'})},
     }
-
-
-admin.site.register(Carousel, CarouselAdmin)

@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from auth_extend.models import User
 
 
+@admin.register(User)
 class UserExtendAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
@@ -18,5 +19,3 @@ class UserExtendAdmin(UserAdmin):
     list_display = ('username', 'email', 'is_staff', 'last_login')
     search_fields = ('username', 'email', 'is_staff', 'last_login')
 
-
-admin.site.register(User, UserExtendAdmin)
