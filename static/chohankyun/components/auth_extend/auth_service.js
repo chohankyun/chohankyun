@@ -13,7 +13,6 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
             'data': data
         }).then(function (data) {
             if (!request_service.use_session) {
-                $http.defaults.headers.common.Authorization = 'Token ' + data.token;
                 $cookies.put("token", data.token);
             }
             request_service.authenticated = true;
@@ -26,7 +25,6 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
             'method': "POST",
             'url': "rest-auth/logout/"
         }).then(function (data) {
-            delete $http.defaults.headers.common.Authorization;
             $cookies.remove('token');
             request_service.authenticated = false;
             $rootScope.$broadcast("chohankyun.logged_out");

@@ -18,10 +18,11 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
         'request': function (args) {
             $rootScope.$broadcast("loading", true);
             // Let's retrieve the token from the cookie, if available
-            if ($cookies.token) {
-                $http.defaults.headers.common.Authorization = 'Token ' + $cookies.get('token')
+            if ($cookies.get('token')) {
+                $http.defaults.headers.common.Authorization = 'jwt ' + $cookies.get('token')
+            } else {
+                delete $http.defaults.headers.common.Authorization;
             }
-            // Continue
             params = args.params || {}
             args = args || {};
             var deferred = $q.defer(),
@@ -34,7 +35,6 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
                 url: url,
                 withCredentials: this.use_session,
                 method: method.toUpperCase(),
-                headers: {'X-CSRFToken': $cookies.get('csrftoken')},
                 params: params,
                 data: data
             })
@@ -43,10 +43,7 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
                     deferred.resolve(data, url);
                 }))
                 .error(angular.bind(this, function (data, status, headers, config) {
-                    // console.log("url: " + url);
-                    // console.log("data : " + data);
-                    // console.log("status : " + status);
-                    // Set request status
+                    $cookies.remove('token')
                     $rootScope.$broadcast("loading", false);
                     if (status == 500) {
                         data = "Internal server error.";
