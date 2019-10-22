@@ -19,7 +19,7 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
             $rootScope.$broadcast("loading", true);
             // Let's retrieve the token from the cookie, if available
             if ($cookies.get('token')) {
-                $http.defaults.headers.common.Authorization = 'jwt ' + $cookies.get('token')
+                $http.defaults.headers.common.Authorization = 'JWT ' + $cookies.get('token')
             } else {
                 delete $http.defaults.headers.common.Authorization;
             }
