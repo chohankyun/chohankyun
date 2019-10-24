@@ -9,7 +9,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
         var data = model;
         return request_service.request({
             'method': "POST",
-            'url': "rest-auth/login/",
+            'url': "api_auth/login/",
             'data': data
         }).then(function (data) {
             if (!request_service.use_session) {

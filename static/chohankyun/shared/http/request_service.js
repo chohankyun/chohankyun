@@ -23,7 +23,7 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
             } else {
                 delete $http.defaults.headers.common.Authorization;
             }
-            params = args.params || {}
+            params = args.params || {};
             args = args || {};
             var deferred = $q.defer(),
                 url = this.API_URL + args.url,
@@ -77,11 +77,11 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
             // Set to false or omit to resolve when status is known
             // Set force to true to ignore stored value and query API
             restrict = restrict || false;
-            force = force || false;
+            force = force || true;
             if (this.authPromise == null || force) {
                 this.authPromise = this.request({
                     'method': "GET",
-                    'url': "rest-auth/user/"
+                    'url': "api_auth/status/"
                 })
             }
             var da = this;
@@ -98,9 +98,13 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
                 // the API to get the authentication status.
                 this.authPromise.then(function (data) {
                     da.authenticated = true;
+                    $cookies.put("token", data.token);
+                    $rootScope.$broadcast("chohankyun.logged_in", data);
                     getAuthStatus.resolve(data);
                 }, function (data) {
                     da.authenticated = false;
+                    $cookies.remove('token');
+                    $rootScope.$broadcast("chohankyun.logged_out");
                     if (restrict) {
                         getAuthStatus.reject("User is not logged in.");
                     } else {

@@ -10,11 +10,6 @@ chohankyun.controller('index_controller', function ($rootScope, $scope, $window,
     index_controller.select_index_item = null;
     index_controller.category = null;
 
-    request_service.authentication_status(true).then(function (data) {
-        index_controller.authenticated = true;
-        index_controller.user = data;
-    });
-
     header_model.detail().then(function (data) {
         $rootScope.title = data.title;
     });
