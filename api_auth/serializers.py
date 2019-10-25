@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
-import uuid
-from calendar import timegm
-from datetime import datetime
 
-import jwt
-from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, exceptions
 
-# Get the UserModel
-from rest_framework_jwt.settings import api_settings
-from rest_framework_jwt.utils import jwt_get_secret_key
-
-UserModel = get_user_model()
+from jwt_auth.authentication import JWTUser
+from jwt_auth.handler import Handler
 
 
 class LoginSerializer(serializers.Serializer):
@@ -59,44 +52,12 @@ class JWTSerializer(serializers.Serializer):
 
     @staticmethod
     def get_user(obj):
-        data = dict()
-        data['id'] = obj.id
-        data['username'] = obj.username
-        data['is_authenticated'] = True
-        return data
+        jwt_user = {'id': obj.id, 'username': obj.username, 'is_authenticated': True}
+        return jwt_user
 
     def get_token(self, obj):
-        payload = self.jwt_payload_handler(obj)
-        token = self.jwt_encode_handler(payload)
+        handler = Handler()
+        obj.client_ip = handler.get_client_ip_address(self.context['request'])
+        payload = handler.jwt_payload_handler(obj)
+        token = handler.jwt_encode_handler(payload)
         return token
-
-    @staticmethod
-    def jwt_payload_handler(obj):
-        payload = {
-            'id': obj.id,
-            'username': obj.username,
-            'exp': datetime.utcnow() + api_settings.JWT_EXPIRATION_DELTA
-        }
-
-        if api_settings.JWT_ALLOW_REFRESH:
-            payload['orig_iat'] = timegm(
-                datetime.utcnow().utctimetuple()
-            )
-
-        if api_settings.JWT_AUDIENCE is not None:
-            payload['aud'] = api_settings.JWT_AUDIENCE
-
-        if api_settings.JWT_ISSUER is not None:
-            payload['iss'] = api_settings.JWT_ISSUER
-
-        return payload
-
-    @staticmethod
-    def jwt_encode_handler(payload):
-        key = api_settings.JWT_PRIVATE_KEY or jwt_get_secret_key(payload)
-        return jwt.encode(
-            payload,
-            key,
-            api_settings.JWT_ALGORITHM
-        ).decode('utf-8')
-

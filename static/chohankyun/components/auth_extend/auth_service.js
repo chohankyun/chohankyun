@@ -21,14 +21,9 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
     };
 
     auth_service.logout = function () {
-        return request_service.request({
-            'method': "POST",
-            'url': "rest-auth/logout/"
-        }).then(function (data) {
-            $cookies.remove('token');
-            request_service.authenticated = false;
-            $rootScope.$broadcast("chohankyun.logged_out");
-        });
+        $cookies.remove('token');
+        request_service.authenticated = false;
+        $rootScope.$broadcast("chohankyun.logged_out");
     };
 
     auth_service.register = function (model) {

@@ -22,7 +22,7 @@ chohankyun.controller('index_controller', function ($rootScope, $scope, $window,
 
     index_controller.reload = function () {
         $route.reload();
-    }
+    };
 
     index_controller.go_url = function (url) {
         if (index_controller.category == url) {
@@ -30,20 +30,12 @@ chohankyun.controller('index_controller', function ($rootScope, $scope, $window,
         } else {
             $location.path(url);
         }
-    }
+    };
 
     index_controller.logout = function () {
-        auth_service.logout().then(function (data) {
-            if ($location.path() == $location.path("home").path()) {
-                $route.reload();
-            } else {
-                $location.path("home");
-            }
-        }, function (error) {
-            index_controller.message = error;
-            $('#index_message_modal').modal('show')
-        });
-    }
+        auth_service.logout();
+        $location.path("home");
+    };
 
     index_controller.my_post = function () {
         $rootScope.$broadcast("my_post", index_controller.category);
@@ -56,7 +48,7 @@ chohankyun.controller('index_controller', function ($rootScope, $scope, $window,
             index_controller.message = 'Please enter at least 2 characters.';
             $('#index_message_modal').modal('show')
         }
-    }
+    };
 
     $scope.$on('chohankyun.logged_out', function () {
         index_controller.authenticated = false;

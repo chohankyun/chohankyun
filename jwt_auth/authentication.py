@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-import uuid
-from calendar import timegm
-from datetime import datetime
-
 import jwt
 
 from django.utils.encoding import smart_text
@@ -12,16 +8,14 @@ from rest_framework.authentication import (
     BaseAuthentication, get_authorization_header
 )
 
-from rest_framework_jwt.settings import api_settings
-
-jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
-jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
+from jwt_auth.handler import Handler
+from chohankyun.settings import JWT_AUTH
 
 
 class JWTUser:
-    def __init__(self, payload):
-        self.id = payload.get('id')
-        self.username = payload.get('username')
+    def __init__(self, data):
+        self.id = data.get('id')
+        self.username = data.get('username')
         self.is_authenticated = True
 
 
@@ -32,7 +26,8 @@ class BaseJSONWebTokenAuthentication(BaseAuthentication):
             return None
 
         try:
-            payload = jwt_decode_handler(jwt_value)
+            handler = Handler()
+            payload = handler.jwt_decode_handler(jwt_value)
         except jwt.ExpiredSignature:
             msg = _('Signature has expired.')
             raise exceptions.AuthenticationFailed(msg)
@@ -42,8 +37,16 @@ class BaseJSONWebTokenAuthentication(BaseAuthentication):
         except jwt.InvalidTokenError:
             raise exceptions.AuthenticationFailed()
 
-        user = JWTUser(payload)
+        if payload.get('client_ip') != handler.get_client_ip_address(request):
+            msg = _('Error decoding data.')
+            raise exceptions.AuthenticationFailed(msg)
+
+        user = self.get_user(payload)
         return user, jwt_value
+
+    @staticmethod
+    def get_user(payload):
+        return JWTUser(payload)
 
 
 class JSONWebTokenAuthentication(BaseJSONWebTokenAuthentication):
@@ -52,11 +55,11 @@ class JSONWebTokenAuthentication(BaseJSONWebTokenAuthentication):
     @staticmethod
     def get_jwt_value(request):
         auth = get_authorization_header(request).split()
-        auth_header_prefix = api_settings.JWT_AUTH_HEADER_PREFIX.lower()
+        auth_header_prefix = JWT_AUTH['JWT_AUTH_HEADER_PREFIX'].lower()
 
         if not auth:
-            if api_settings.JWT_AUTH_COOKIE:
-                return request.COOKIES.get(api_settings.JWT_AUTH_COOKIE)
+            if JWT_AUTH['JWT_AUTH_COOKIE']:
+                return request.COOKIES.get(JWT_AUTH['JWT_AUTH_COOKIE'])
             return None
 
         if smart_text(auth[0].lower()) != auth_header_prefix:
@@ -73,4 +76,4 @@ class JSONWebTokenAuthentication(BaseJSONWebTokenAuthentication):
         return auth[1]
 
     def authenticate_header(self, request):
-        return '{0} realm="{1}"'.format(api_settings.JWT_AUTH_HEADER_PREFIX, self.www_authenticate_realm)
+        return '{0} realm="{1}"'.format(JWT_AUTH['JWT_AUTH_HEADER_PREFIX'], self.www_authenticate_realm)

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.sites',
+    'jwt_auth',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -165,7 +166,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'api_auth.authentication.JSONWebTokenAuthentication',
+        'jwt_auth.authentication.JSONWebTokenAuthentication',
     ],
 }
 
@@ -173,8 +174,26 @@ REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'auth_extend.serializers.UserDetailsSerializer',
 }
 
+JWT_AUTH = {
+    'JWT_PRIVATE_KEY': None,
+    'JWT_PUBLIC_KEY': None,
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_GET_USER_SECRET_KEY': None,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=60*30),
+    'JWT_AUDIENCE': None,
+    'JWT_ISSUER': None,
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_AUTH_COOKIE': None,
+}
+
 # Message
-MESSAGE_STORAGE = 'utils.storage.MessageStorage'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # Logger
 LOGGING = {

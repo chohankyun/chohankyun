@@ -41,5 +41,5 @@ class StatusView(GenericAPIView):
     serializer_class = JWTSerializer
 
     def get(self, request):
-        serializer = self.get_serializer(instance=request.user, context={'request': self.request})
+        serializer = self.get_serializer(instance=request.user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
