@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import jwt
-
 from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 from rest_framework import exceptions
@@ -8,8 +7,8 @@ from rest_framework.authentication import (
     BaseAuthentication, get_authorization_header
 )
 
-from jwt_auth.handler import Handler
 from chohankyun.settings import JWT_AUTH
+from jwt_auth.handler import Handler
 
 
 class JWTUser:

@@ -4,11 +4,11 @@ var chohankyun = angular.module('chohankyun')
 
 chohankyun.controller('profile_controller', function ($scope, $window, $location, auth_service, validate) {
     var profile_controller = this;
-    profile_controller.model = {'username': '', 'password': '', 'email': '', 'local_last_login': ''};
+    profile_controller.model = {'username': '', 'date_joined': '', 'email': '', 'local_last_login': ''};
     profile_controller.is_disabled = true;
 
 
-    auth_service.detail().then(function (data) {
+    auth_service.session_user().then(function (data) {
         profile_controller.model = data;
     })
 

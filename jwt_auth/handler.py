@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import jwt
 from calendar import timegm
 from datetime import datetime
+
+import jwt
 
 from chohankyun.settings import JWT_AUTH
 
@@ -9,7 +10,9 @@ from chohankyun.settings import JWT_AUTH
 class Handler:
     @staticmethod
     def jwt_get_secret_key():
-        # 나중에 키 관련 로직 추가
+        """
+            나중에 키 관련 로직 추가
+        """
         if JWT_AUTH['JWT_GET_USER_SECRET_KEY']:
             key = str(JWT_AUTH['JWT_GET_USER_SECRET_KEY'])
             return key

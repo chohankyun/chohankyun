@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMultiAlternatives
+from django.template import loader
+from django.templatetags import l10n
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, exceptions
 
-from jwt_auth.authentication import JWTUser
+from chohankyun import settings
 from jwt_auth.handler import Handler
 
 
@@ -57,7 +60,61 @@ class JWTSerializer(serializers.Serializer):
 
     def get_token(self, obj):
         handler = Handler()
-        obj.client_ip = handler.get_client_ip_address(self.context['request'])
+        obj.client_ip = handler.get_client_ip_address(self.context.get('request'))
         payload = handler.jwt_payload_handler(obj)
         token = handler.jwt_encode_handler(payload)
         return token
+
+
+class SessionUserSerializer(serializers.ModelSerializer):
+    local_last_login = serializers.SerializerMethodField()
+
+    class Meta:
+        model = get_user_model()
+        fields = ['id', 'username', 'date_joined', 'email', 'local_last_login']
+
+    @staticmethod
+    def get_local_last_login(obj):
+        return l10n.localize(obj.last_login)
+
+
+class UsernameFindSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        user = get_user_model().objects.filter(email=email).first()
+
+        if user:
+            if not user.is_active:
+                msg = _('User account is disabled.')
+                raise exceptions.ValidationError(msg)
+        else:
+            msg = _('Invalid Email.')
+            raise exceptions.ValidationError(msg)
+
+        attrs['user'] = user
+        return attrs
+
+    def save(self):
+        self.send_email()
+
+    def send_email(self):
+        request = self.context.get('request')
+        current_site = get_current_site(request)
+        site_name = current_site.name
+        domain = current_site.domain
+        user = self.validated_data['user']
+
+        context = {
+            'domain': domain,
+            'site_name': site_name,
+            'user': user,
+            'protocol': 'https' if request.is_secure() else 'http',
+        }
+
+        subject = loader.render_to_string('registration/username_find_subject.txt', context)
+        subject = ''.join(subject.splitlines())
+        body = loader.render_to_string('registration/username_find_email.html', context)
+        email_message = EmailMultiAlternatives(subject, body, settings.DEFAULT_FROM_EMAIL, [user.email])
+        email_message.send()

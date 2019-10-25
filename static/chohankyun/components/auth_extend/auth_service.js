@@ -26,6 +26,14 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
         $rootScope.$broadcast("chohankyun.logged_out");
     };
 
+    auth_service.session_user = function (model) {
+        var data = model;
+        return request_service.request({
+            'method': "GET",
+            'url': "api_auth/session/user/",
+        });
+    };
+
     auth_service.register = function (model) {
         var data = model;
         return request_service.request({
@@ -92,7 +100,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
     auth_service.find_username = function (email) {
         return request_service.request({
             'method': "POST",
-            'url': "rest-auth/username/find/",
+            'url': "api_auth/username/find/",
             'data': {
                 'email': email
             }
