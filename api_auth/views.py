@@ -1,13 +1,14 @@
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 from django.utils.decorators import method_decorator
-from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from api_auth.serializers import LoginSerializer, JWTSerializer, SessionUserSerializer, UsernameFindSerializer
+from api_auth.serializers import LoginSerializer, JWTSerializer, SessionUserSerializer, UsernameFindSerializer, PasswordResetSerializer, PasswordResetConfirmSerializer, PasswordChangeSerializer
 
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters(
@@ -67,3 +68,35 @@ class UsernameFindView(GenericAPIView):
         serializer.save()
         return Response(_('Your username has been sent to your e-mail address.'))
 
+
+class PasswordResetView(GenericAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = PasswordResetSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(_('Password reset e-mail has been sent.'))
+
+
+class PasswordResetConfirmView(GenericAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = PasswordResetConfirmSerializer
+
+    def get(self, request):
+        password = {'new_password1': self.kwargs['password'], 'new_password2': self.kwargs['password']}
+        serializer = self.get_serializer(data=password, context={'request': request})
+        serializer.save()
+        return HttpResponse(_('Password has been reset with the new password.'))
+
+
+class PasswordChangeView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PasswordChangeSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(_('Password has been changed with the new password.'))

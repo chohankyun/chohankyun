@@ -152,11 +152,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-REST_USE_JWT = True
-REST_SESSION_LOGIN = False
-
 AUTH_USER_MODEL = 'auth_extend.User'
-OLD_PASSWORD_FIELD_ENABLED = True
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
