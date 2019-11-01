@@ -3,12 +3,12 @@ from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
-from rest_framework import status
+from rest_framework import status, exceptions
 from rest_framework.generics import GenericAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from api_auth.serializers import LoginSerializer, JWTSerializer, SessionUserSerializer, UsernameFindSerializer, PasswordResetSerializer, PasswordResetConfirmSerializer, PasswordChangeSerializer
+from api_auth.serializers import LoginSerializer, JWTSerializer, SessionUserSerializer, UsernameFindSerializer, PasswordResetSerializer, PasswordResetConfirmSerializer, PasswordChangeSerializer, RegisterSerializer, EmailConfirmSerializer
 
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters(
@@ -45,7 +45,6 @@ class StatusView(GenericAPIView):
 
     def get(self, request):
         serializer = self.get_serializer(instance=request.user, context={'request': request})
-        serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -84,10 +83,13 @@ class PasswordResetConfirmView(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = PasswordResetConfirmSerializer
 
-    def get(self, request):
-        password = {'new_password1': self.kwargs['password'], 'new_password2': self.kwargs['password']}
-        serializer = self.get_serializer(data=password, context={'request': request})
-        serializer.save()
+    def get(self, request, **kwargs):
+        try:
+            serializer = self.get_serializer(data=kwargs, context={'request': request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except exceptions.ValidationError as e:
+            return HttpResponse(e.default_detail, status=status.HTTP_400_BAD_REQUEST)
         return HttpResponse(_('Password has been reset with the new password.'))
 
 
@@ -95,8 +97,38 @@ class PasswordChangeView(GenericAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = PasswordChangeSerializer
 
+    @sensitive_post_parameters_m
     def post(self, request):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(_('Password has been changed with the new password.'))
+
+
+class RegisterView(GenericAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
+
+    @sensitive_post_parameters_m
+    def dispatch(self, *args, **kwargs):
+        return super(RegisterView, self).dispatch(*args, **kwargs)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(_('Verification email sent.'))
+
+
+class EmailConfirmView(GenericAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = EmailConfirmSerializer
+
+    def get(self, request, **kwargs):
+        try:
+            serializer = self.get_serializer(data=kwargs, context={'request': request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except exceptions.ValidationError as e:
+            return HttpResponse(e.default_detail, status=status.HTTP_400_BAD_REQUEST)
+        return HttpResponse(_('Your email has been verified.'))

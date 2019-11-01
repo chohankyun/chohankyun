@@ -8,7 +8,7 @@ from rest_framework.authentication import (
 )
 
 from chohankyun.settings import JWT_AUTH
-from jwt_auth.handler import Handler
+from shared.handler import Handler
 
 
 class JWTUser:

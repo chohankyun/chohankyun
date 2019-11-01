@@ -27,7 +27,6 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
     };
 
     auth_service.session_user = function (model) {
-        var data = model;
         return request_service.request({
             'method': "GET",
             'url': "api_auth/session/user/",
@@ -38,7 +37,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
         var data = model;
         return request_service.request({
             'method': "POST",
-            'url': "rest-auth/registration/",
+            'url': "api_auth/register/",
             'data': data
         });
     };

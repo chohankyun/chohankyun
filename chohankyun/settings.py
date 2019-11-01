@@ -41,15 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'django.contrib.sites',
-    'jwt_auth',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'rest_auth',
-    'rest_auth.registration',
-    'auth_extend',
+    'shared',
+    'api_auth',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'rest_auth',
+    # 'rest_auth.registration',
+    # 'auth_extend',
     'index',
     'home',
     'search',
@@ -152,7 +153,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-AUTH_USER_MODEL = 'auth_extend.User'
+AUTH_USER_MODEL = 'api_auth.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
@@ -162,13 +163,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'jwt_auth.authentication.JSONWebTokenAuthentication',
+        'shared.authentication.JSONWebTokenAuthentication',
     ],
 }
 
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'auth_extend.serializers.UserDetailsSerializer',
-}
+# REST_AUTH_SERIALIZERS = {
+#     'USER_DETAILS_SERIALIZER': 'auth_extend.serializers.UserDetailsSerializer',
+# }
 
 JWT_AUTH = {
     'JWT_PRIVATE_KEY': None,
