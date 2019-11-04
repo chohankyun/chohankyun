@@ -88,7 +88,7 @@ class UsernameFindSerializer(serializers.Serializer, EmailMixin):
 
     def validate(self, attrs):
         email = attrs.get('email')
-        user = self.validate_email(email)
+        user = self._validate_email(email)
 
         if not user.is_active:
             msg = _('User account is disabled.')
@@ -106,7 +106,7 @@ class PasswordResetSerializer(serializers.Serializer, EmailMixin):
 
     def validate(self, attrs):
         email = attrs.get('email')
-        user = self.validate_email(email)
+        user = self._validate_email(email)
 
         if not user.is_active:
             msg = _('User account is disabled.')

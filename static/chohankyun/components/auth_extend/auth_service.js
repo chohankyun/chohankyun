@@ -81,7 +81,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
         var data = model;
         return request_service.request({
             'method': "POST",
-            'url': "rest-auth/password/change/",
+            'url': "api_auth/password/change/",
             'data': data
         });
     };
@@ -89,7 +89,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
     auth_service.reset_password = function (email) {
         return request_service.request({
             'method': "POST",
-            'url': "rest-auth/password/reset/",
+            'url': "api_auth/password/reset/",
             'data': {
                 'email': email
             }

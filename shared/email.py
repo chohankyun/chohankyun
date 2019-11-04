@@ -15,7 +15,7 @@ class EmailMixin:
         return {}
 
     @staticmethod
-    def validate_email(email):
+    def _validate_email(email):
         user = get_user_model().objects.filter(email=email).first()
 
         if not user:

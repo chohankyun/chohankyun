@@ -6,10 +6,6 @@ chohankyun.controller('password_controller', function ($scope, $window, auth_ser
     var password_controller = this;
     password_controller.model = {'old_password': '', 'new_password1': '', 'new_password2': ''};
 
-    auth_service.detail().then(function (data) {
-        password_controller.model = data;
-    })
-
     password_controller.change_password = function (formData) {
         password_controller.errors = [];
 

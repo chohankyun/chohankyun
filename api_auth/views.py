@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, user_logged_in
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -8,7 +8,9 @@ from rest_framework.generics import GenericAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from api_auth.serializers import LoginSerializer, JWTSerializer, SessionUserSerializer, UsernameFindSerializer, PasswordResetSerializer, PasswordResetConfirmSerializer, PasswordChangeSerializer, RegisterSerializer, EmailConfirmSerializer
+from api_auth.serializers import (LoginSerializer, JWTSerializer, SessionUserSerializer, UsernameFindSerializer,
+                                  PasswordResetSerializer, PasswordResetConfirmSerializer, PasswordChangeSerializer,
+                                  RegisterSerializer, EmailConfirmSerializer)
 
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters(
@@ -27,6 +29,7 @@ class LoginView(GenericAPIView):
 
     def post(self, request):
         user = self.login(request)
+        user_logged_in.send(sender=user.__class__, request=request, user=user)
         return self.get_response(user)
 
     def login(self, request):
@@ -98,6 +101,9 @@ class PasswordChangeView(GenericAPIView):
     serializer_class = PasswordChangeSerializer
 
     @sensitive_post_parameters_m
+    def dispatch(self, *args, **kwargs):
+        return super(PasswordChangeView, self).dispatch(*args, **kwargs)
+
     def post(self, request):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
