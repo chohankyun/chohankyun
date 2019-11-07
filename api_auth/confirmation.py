@@ -57,7 +57,7 @@ class EmailConfirmationHMAC:
 
         if not protocol and default_protocol == 'https':
             protocol = default_protocol
-        # (end NOTE)
+
         if protocol:
             uri = protocol + ':' + uri.partition(':')[2]
         return uri

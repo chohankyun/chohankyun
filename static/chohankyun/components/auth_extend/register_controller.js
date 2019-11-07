@@ -15,10 +15,10 @@ chohankyun.controller('register_controller', function ($scope, auth_service, val
         if (!formData.$invalid) {
             auth_service.register(register_controller.model)
                 .then(function (data) {
-                    register_controller.messages.detail = [data.detail];
+                    register_controller.messages = [data];
                     $('#register_message_modal').modal('show')
                 }, function (error) {
-                    register_controller.messages = error;
+                    register_controller.messages = validate.server_error(error);
                     $('#register_message_modal').modal('show')
                 });
         }

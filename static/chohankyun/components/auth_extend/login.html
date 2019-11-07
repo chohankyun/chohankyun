@@ -43,32 +43,6 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="re_register_message_modal" tabindex="-1" role="dialog" aria-labelledby="re_register_message_modal_label" aria-hidden="true">
-    <div class="modal-dialog modal-sm small" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h7 class="modal-title" id="re_register_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Member re-register message' | translate }}</strong></h7>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body bg-info text-light" ng-repeat="message in login.messages">
-                <div>
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
-                </div>
-                <div>
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'If you can not complete your email verification, you will need to sign up again and your existing membership information will be deleted.' | translate }}
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-danger" ng-click="login.re_register()">{{ 'Re-register' | translate }}</button>
-                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
 <div class="modal fade" id="login_message_modal" tabindex="-1" role="dialog" aria-labelledby="login_message_modal_label" aria-hidden="true">
     <div class="modal-dialog modal-sm small" role="document">
         <div class="modal-content">
@@ -78,10 +52,38 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body bg-info text-light" ng-repeat="message in login.messages">
-                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate }}
+            <div class="modal-body bg-info text-light">
+                <div ng-repeat="message in login.messages">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="re_register_message_modal" tabindex="-1" role="dialog" aria-labelledby="re_register_message_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-sm small" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h7 class="modal-title" id="re_register_message_modal_label"><i class="fa fa-lg fa-coffee" aria-hidden="true"></i> <strong>{{ 'Member re-register message' | translate }}</strong></h7>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-info text-light">
+                <div ng-repeat="message in login.messages">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                </div>
+                <div>
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'If you can not complete your email verification, you will need to sign up again and your existing membership information will be deleted.' | translate }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-danger" data-dismiss="modal" ng-click="login.re_register()">{{ 'Re-register' | translate }}</button>
                 <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
             </div>
         </div>

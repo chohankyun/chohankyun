@@ -1,10 +1,12 @@
+import json
+
 from django.contrib.auth import get_user_model, user_logged_in
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework import status, exceptions
-from rest_framework.generics import GenericAPIView, RetrieveAPIView
+from rest_framework.generics import GenericAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
@@ -138,3 +140,41 @@ class EmailConfirmView(GenericAPIView):
         except exceptions.ValidationError as e:
             return HttpResponse(e.default_detail, status=status.HTTP_400_BAD_REQUEST)
         return HttpResponse(_('Your email has been verified.'))
+
+
+class UserResetView(DestroyAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = LoginSerializer
+
+    def get_object(self):
+        username = json.loads(self.request.body.decode('utf-8'))['username']
+        password = json.loads(self.request.body.decode('utf-8'))['password']
+        serializer = self.get_serializer(context={'request': self.request})
+        return serializer.authenticate(username=username, password=password)
+
+
+class SessionUserDeleteView(DestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        user_id = self.request.user.id
+        return get_user_model().objects.get(pk=user_id)
+
+    def perform_destroy(self, instance):
+        if not instance.check_password(self.request.body.decode('utf-8')):
+            raise exceptions.AuthenticationFailed(_('Invalid password.'))
+        instance.delete()
+
+
+class SessionUserUpdateView(UpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = SessionUserSerializer
+
+    def get_object(self):
+        user_id = self.request.user.id
+        return get_user_model().objects.get(pk=user_id)
+
+    def perform_update(self, serializer):
+        if not serializer.instance.check_password(self.request.data['password']):
+            raise exceptions.AuthenticationFailed(_('Invalid password.'))
+        serializer.save()

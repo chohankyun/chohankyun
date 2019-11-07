@@ -42,19 +42,11 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
         });
     };
 
-    auth_service.detail = function (model) {
-        var data = model;
-        return request_service.request({
-            'method': "GET",
-            'url': "rest-auth/user/",
-        });
-    };
-
     auth_service.update = function (model) {
         var data = model;
         return request_service.request({
             'method': "PATCH",
-            'url': "rest-auth/user/",
+            'url': "api_auth/session/user/update/",
             'data': data
         });
     };
@@ -63,7 +55,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
         var data = model;
         return request_service.request({
             'method': "DELETE",
-            'url': "rest-auth/user/",
+            'url': "api_auth/session/user/delete/",
             'data': data
         });
     };
@@ -72,7 +64,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
         var data = model;
         return request_service.request({
             'method': "DELETE",
-            'url': "rest-auth/user/reset",
+            'url': "api_auth/user/reset/",
             'data': data
         });
     };

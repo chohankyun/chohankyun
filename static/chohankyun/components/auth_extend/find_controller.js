@@ -21,20 +21,19 @@ chohankyun.controller('find_controller', function ($scope, $routeParams, $locati
             if ($routeParams['find_word'] == 'username') {
                 auth_service.find_username(find_controller.model.email)
                     .then(function (data) {
-                        find_controller.message = data;
+                        find_controller.messages = [data];
                         $('#find_message_modal').modal('show')
                     }, function (error) {
-                        console.log(error);
-                        find_controller.message = error.detail;
+                        find_controller.messages = [error.detail];
                         $('#find_message_modal').modal('show')
                     });
             } else {
                 auth_service.reset_password(find_controller.model.email)
                     .then(function (data) {
-                        find_controller.message = data;
+                        find_controller.messages = [data];
                         $('#find_message_modal').modal('show')
                     }, function (error) {
-                        find_controller.message = error.detail;
+                        find_controller.messages = [error.detail];
                         $('#find_message_modal').modal('show')
                     });
             }

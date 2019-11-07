@@ -19,11 +19,11 @@ chohankyun.controller('login_controller', function ($scope, $window, $location, 
                 .then(function (data) {
                     $location.path("/main/home");
                 }, function (error) {
-                    login_controller.messages = error.non_field_errors;
-
                     if (error.status == 406) {
+                        login_controller.messages = [error.detail];
                         $('#re_register_message_modal').modal('show');
                     } else {
+                        login_controller.messages = validate.server_error(error);
                         $('#login_message_modal').modal('show');
                     }
                 });
@@ -34,11 +34,9 @@ chohankyun.controller('login_controller', function ($scope, $window, $location, 
         auth_service.reset_user(login_controller.model).then(
             function (data) {
                 $location.path('/register');
-                $window.location.reload();
             },
             function (error) {
                 login_controller.messages = [error.detail];
-                $("#re_register_message_modal").modal('hide');
                 $('#login_message_modal').modal('show');
             });
     }

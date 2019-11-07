@@ -47,6 +47,20 @@ chohankyun.service('validate', function () {
                     this.validation_messages(field, form, error_bin);
                 }
             }
+        },
+        'server_error': function (error) {
+            var messages = [];
+            if (error.status == 400 && error.non_field_errors == undefined) {
+                delete error.status;
+                for (var key in error) {
+                    messages.push(key + ': ' + error[key]);
+                }
+            } else if (error.status == 400 && error.non_field_errors != undefined) {
+                messages = error.non_field_errors;
+            } else {
+                messages = [error.detail];
+            }
+            return messages;
         }
     }
 });

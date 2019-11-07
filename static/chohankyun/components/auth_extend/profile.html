@@ -14,7 +14,7 @@
                     <h5><span class="badge badge-secondary">{{ 'Username' | translate }}</span></h5>
                     <input name="username" id="id_username" class="form-control form-control-sm" type="text" ng-model="profile.model.username" ng-disabled="profile.is_disabled" placeholder="{{ 'Username' | translate }}" required/>
                 </div>
-                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.username">{{ error | translate}}
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.username">{{ error | translate }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -23,7 +23,7 @@
                     <h5><span class="badge badge-secondary">{{ 'Password' | translate }}</span></h5>
                     <input name="password" id="id_password" class="form-control form-control-sm" type="password" ng-model="profile.model.password" placeholder="{{ 'Password' | translate }}" required/>
                 </div>
-                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.password">{{ error | translate}}
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.password">{{ error | translate }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -32,7 +32,7 @@
                     <h5><span class="badge badge-secondary">{{ 'Email' | translate }}</span></h5>
                     <input name="email" id="id_email" class="form-control form-control-sm" type="email" ng-model="profile.model.email" placeholder="{{ 'Email' | translate }}" disabled/>
                 </div>
-                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.email">{{ error | translate}}
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.errors.email">{{ error | translate }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -63,7 +63,9 @@
                 </button>
             </div>
             <div class="modal-body bg-info text-light">
-                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ profile.message | translate }}
+                <div ng-repeat="message in profile.messages">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
@@ -83,7 +85,9 @@
                 </button>
             </div>
             <div class="modal-body bg-info text-light">
-                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ profile.message | translate}}
+                <div ng-repeat="message in profile.messages">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
@@ -116,7 +120,7 @@
                         <h5><span class="badge badge-danger">{{ 'Password' | translate }}</span></h5>
                         <input name="password" id="id_password" class="form-control form-control-sm" type="password" ng-model="profile.model.password" placeholder="{{ 'Password' | translate }}" required/>
                     </div>
-                    <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.confirm_errors.password">{{ error | translate}}
+                    <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in profile.confirm_errors.password">{{ error | translate }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -124,7 +128,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="modal-btn-confirm" type="submit" class="btn btn-sm btn-outline-danger">{{ 'Confirm' | translate }}</button>
+                    <button id="modal-btn-confirm" type="submit" class="btn btn-sm btn-outline-danger" data-dismiss="modal">{{ 'Confirm' | translate }}</button>
                     <button id="modal-btn-cancel" type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Cancel' | translate }}</button>
                 </div>
             </form>

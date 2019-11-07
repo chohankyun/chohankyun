@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
 
-from api_auth.views import LoginView, StatusView, SessionUserView, UsernameFindView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView, RegisterView, EmailConfirmView
+from api_auth.views import (LoginView, StatusView, SessionUserView, UsernameFindView, PasswordResetView,
+                            PasswordResetConfirmView, PasswordChangeView, RegisterView, EmailConfirmView,
+                            UserResetView, SessionUserDeleteView, SessionUserUpdateView)
 
 urlpatterns = [
     url(r'^login/$', LoginView.as_view(), name='login'),
@@ -13,4 +15,7 @@ urlpatterns = [
     url(r'^password/change/$', PasswordChangeView.as_view(), name='password_change'),
     url(r'^register/', RegisterView.as_view(), name='register'),
     url(r'^email/confirm/(?P<key>[-:\w]+)/$', EmailConfirmView.as_view(), name="email_confirm"),
+    url(r'^user/reset/$', UserResetView.as_view(), name='user_reset'),
+    url(r'^session/user/delete/$', SessionUserDeleteView.as_view(), name='session_user_delete'),
+    url(r'^session/user/update/$', SessionUserUpdateView.as_view(), name='session_user_update'),
 ]

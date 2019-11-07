@@ -17,27 +17,21 @@ from shared.handler import Handler
 
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=True)
-    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+    username = serializers.CharField()
+    password = serializers.CharField()
 
     def authenticate(self, **kwargs):
         return authenticate(self.context['request'], **kwargs)
-
-    def _validate_username(self, username, password):
-        if username and password:
-            return self.authenticate(username=username, password=password)
-        else:
-            msg = _('Must include "username" and "password".')
-            raise exceptions.ValidationError(msg)
 
     def validate(self, attrs):
         username = attrs.get('username')
         password = attrs.get('password')
 
-        user = None
-
-        if username:
-            user = self._validate_username(username, password)
+        if username and password:
+            user = self.authenticate(username=username, password=password)
+        else:
+            msg = _('Must include "username" and "password".')
+            raise exceptions.ValidationError(msg)
 
         if user:
             if not user.is_active:
@@ -46,6 +40,9 @@ class LoginSerializer(serializers.Serializer):
             if user.is_staff or user.is_superuser:
                 msg = _('You do not have permission to perform this action.')
                 raise exceptions.ValidationError(msg)
+            if not user.is_email_verified:
+                msg = _('Email is not verified.')
+                raise exceptions.NotAcceptable(msg)
         else:
             msg = _('Unable to log in with provided credentials.')
             raise exceptions.ValidationError(msg)

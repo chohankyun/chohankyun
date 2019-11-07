@@ -14,10 +14,10 @@ chohankyun.controller('password_controller', function ($scope, $window, auth_ser
         if (!formData.$invalid) {
             auth_service.change_password(password_controller.model)
                 .then(function (data) {
-                    password_controller.message = data;
+                    password_controller.messages = [data];
                     $('#password_message_modal').modal('show');
                 }, function (error) {
-                    password_controller.message = error.detail;
+                    password_controller.messages = [error.detail];
                     $('#password_message_modal').modal('show');
                 });
         }

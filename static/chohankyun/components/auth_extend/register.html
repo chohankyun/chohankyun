@@ -76,17 +76,8 @@
                 </button>
             </div>
             <div class="modal-body bg-info text-light">
-                <div ng-repeat="message in register.messages.username">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
-                </div>
-                <div ng-repeat="message in register.messages.password1">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
-                </div>
-                <div ng-repeat="message in register.messages.email">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
-                </div>
-                <div ng-repeat="message in register.messages.detail">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
+                <div ng-repeat="message in register.messages">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
                 </div>
             </div>
             <div class="modal-footer">

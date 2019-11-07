@@ -14,13 +14,13 @@
                     <h5><span class="badge badge-secondary">{{ 'Email' | translate }}</span></h5>
                     <input name="email" id="id_email" type="text" ng-model="find.model.email" placeholder="{{ 'Email' | translate }}" class="form-control form-control-sm" required/>
                 </div>
-                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in find.errors.email">{{ error | translate}}
+                <div class="alert alert-danger alert-dismissible fade show" ng-repeat="error in find.errors.email">{{ error | translate }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-sm btn-outline-info" title="{{ find.model.type | translate}} {{ 'Send email' | translate }}">{{ find.model.type | translate}} {{ 'Send email' | translate }}</button>
+                    <button type="submit" class="btn btn-sm btn-outline-info" title="{{ find.model.type | translate }} {{ 'Send email' | translate }}">{{ find.model.type | translate }} {{ 'Send email' | translate }}</button>
                     <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/login')" title="{{ 'Login' | translate }}">{{ 'Login' | translate }}</button>
                     <button type="button" class="btn btn-sm btn-outline-info" ng-click="index.go_url('/')" title="{{ 'Cancel' | translate }}">{{ 'Cancel' | translate }}</button>
                 </div>
@@ -40,7 +40,9 @@
                 </button>
             </div>
             <div class="modal-body bg-info text-light">
-                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ find.message | translate }}
+                <div ng-repeat="message in find.messages">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>

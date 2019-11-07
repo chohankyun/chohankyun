@@ -9,7 +9,7 @@ chohankyun.directive('passwordConfirm', function () {
             var firstPassword = '#' + attrs.passwordConfirm;
             elem.add(firstPassword).on('keyup', function () {
                 scope.$apply(function () {
-                    var v = elem.val() === $(firstPassword).val();
+                    var v = elem.val() == $(firstPassword).val();
                     ctrl.$setValidity('password_confirm', v);
                 });
             });

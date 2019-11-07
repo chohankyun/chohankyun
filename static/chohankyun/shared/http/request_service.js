@@ -43,7 +43,6 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
                     deferred.resolve(data, url);
                 }))
                 .error(angular.bind(this, function (data, status, headers, config) {
-                    $cookies.remove('token')
                     $rootScope.$broadcast("loading", false);
                     if (status == 500) {
                         data = "Internal server error.";
