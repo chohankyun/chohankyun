@@ -1,2 +1,0 @@
-{% load i18n %}
-{% blocktrans %}{{e-mail}} address {{user}} have has been verify.{% endblocktrans %}

@@ -17,7 +17,7 @@ chohankyun.controller('password_controller', function ($scope, $window, auth_ser
                     password_controller.messages = [data];
                     $('#password_message_modal').modal('show');
                 }, function (error) {
-                    password_controller.messages = [error.detail];
+                    password_controller.messages =  validate.server_error(error);
                     $('#password_message_modal').modal('show');
                 });
         }

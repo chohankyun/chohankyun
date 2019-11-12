@@ -41,16 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'rest_framework.authtoken',
     'django.contrib.sites',
     'shared',
     'api_auth',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'rest_auth',
-    # 'rest_auth.registration',
-    # 'auth_extend',
     'index',
     'home',
     'search',
@@ -64,10 +57,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'chohankyun.urls'
@@ -167,10 +158,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-# REST_AUTH_SERIALIZERS = {
-#     'USER_DETAILS_SERIALIZER': 'auth_extend.serializers.UserDetailsSerializer',
-# }
-
 JWT_AUTH = {
     'JWT_PRIVATE_KEY': None,
     'JWT_PUBLIC_KEY': None,
@@ -235,9 +222,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'chohankyun'
 EMAIL_HOST_PASSWORD = os.environ['CHOHANKYUN_EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = 'chohankyun@gmail.com'
-
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False

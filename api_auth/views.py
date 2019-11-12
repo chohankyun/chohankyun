@@ -178,3 +178,16 @@ class SessionUserUpdateView(UpdateAPIView):
         if not serializer.instance.check_password(self.request.data['password']):
             raise exceptions.AuthenticationFailed(_('Invalid password.'))
         serializer.save()
+
+    def get_response(self, user):
+        jwt_serializer = JWTSerializer(instance=user, context={'request': self.request})
+        return Response(jwt_serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        user = get_user_model().objects.get(pk=instance.id)
+        return self.get_response(user)

@@ -12,9 +12,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
             'url': "api_auth/login/",
             'data': data
         }).then(function (data) {
-            if (!request_service.use_session) {
-                $cookies.put("token", data.token);
-            }
+            $cookies.put("token", data.token);
             request_service.authenticated = true;
             $rootScope.$broadcast("chohankyun.logged_in", data);
         });
@@ -48,6 +46,10 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
             'method': "PATCH",
             'url': "api_auth/session/user/update/",
             'data': data
+        }).then(function (data) {
+            $cookies.put("token", data.token);
+            request_service.authenticated = true;
+            $rootScope.$broadcast("chohankyun.logged_in", data);
         });
     };
 

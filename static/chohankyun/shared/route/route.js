@@ -3,7 +3,7 @@
 chohankyun.config(function ($routeProvider) {
     $routeProvider
         .when('/login', {
-            templateUrl: '/static/chohankyun/components/auth_extend/login.html',
+            templateUrl: '/static/chohankyun/components/api_auth/login.html',
             controller: 'login_controller',
             controllerAs: 'login',
             resolve: {
@@ -13,7 +13,7 @@ chohankyun.config(function ($routeProvider) {
             }
         })
         .when('/find/:find_word', {
-            templateUrl: '/static/chohankyun/components/auth_extend/find.html',
+            templateUrl: '/static/chohankyun/components/api_auth/find.html',
             controller: 'find_controller',
             controllerAs: 'find',
             resolve: {
@@ -23,7 +23,7 @@ chohankyun.config(function ($routeProvider) {
             }
         })
         .when('/register', {
-            templateUrl: '/static/chohankyun/components/auth_extend/register.html',
+            templateUrl: '/static/chohankyun/components/api_auth/register.html',
             controller: 'register_controller',
             controllerAs: 'register',
             resolve: {
@@ -33,7 +33,7 @@ chohankyun.config(function ($routeProvider) {
             }
         })
         .when('/profile', {
-            templateUrl: '/static/chohankyun/components/auth_extend/profile.html',
+            templateUrl: '/static/chohankyun/components/api_auth/profile.html',
             controller: 'profile_controller',
             controllerAs: 'profile',
             resolve: {
@@ -43,7 +43,7 @@ chohankyun.config(function ($routeProvider) {
             }
         })
         .when('/password', {
-            templateUrl: '/static/chohankyun/components/auth_extend/password.html',
+            templateUrl: '/static/chohankyun/components/api_auth/password.html',
             controller: 'password_controller',
             controllerAs: 'password',
             resolve: {

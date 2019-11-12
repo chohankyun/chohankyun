@@ -1,6 +1,4 @@
-{% spaceless %}
 {% load i18n %}
 {% autoescape off %}
 [{{ site_name }}] {% blocktrans %}Username finding on.{% endblocktrans %}
 {% endautoescape %}
-{% endspaceless %}

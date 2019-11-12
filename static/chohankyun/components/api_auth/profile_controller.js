@@ -10,7 +10,7 @@ chohankyun.controller('profile_controller', function ($scope, $window, $location
 
     auth_service.session_user().then(function (data) {
         profile_controller.model = data;
-    })
+    });
 
     profile_controller.update = function (formData) {
         profile_controller.errors = [];
@@ -27,7 +27,7 @@ chohankyun.controller('profile_controller', function ($scope, $window, $location
                     $('#profile_message_modal').modal('show');
                 });
         }
-    }
+    };
 
     $('#profile_change_message_modal').on('hide.bs.modal', function () {
         $window.location.reload();
@@ -35,7 +35,7 @@ chohankyun.controller('profile_controller', function ($scope, $window, $location
 
     profile_controller.delete = function () {
         $("#confirm_message_modal").modal('show');
-    }
+    };
 
     profile_controller.confirm = function (formData) {
         profile_controller.confirm_errors = [];
@@ -53,7 +53,7 @@ chohankyun.controller('profile_controller', function ($scope, $window, $location
                     $('#profile_message_modal').modal('show');
                 });
         }
-    }
+    };
 
     $("#confirm_message_modal").on("hide.bs.modal", function () {
         profile_controller.model.password = '';
