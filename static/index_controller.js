@@ -45,7 +45,7 @@ chohankyun.controller('index_controller', function ($rootScope, $scope, $window,
         if (index_controller.search_word != null && index_controller.search_word != '' && index_controller.search_word.length >= 2) {
             $location.path("/search/" + encodeURIComponent(index_controller.search_word));
         } else {
-            index_controller.message = 'Please enter at least 2 characters.';
+            index_controller.messages = ['Please enter at least 2 characters.'];
             $('#index_message_modal').modal('show')
         }
     };
@@ -65,7 +65,7 @@ chohankyun.controller('index_controller', function ($rootScope, $scope, $window,
     });
 
     $scope.$on('error', function (event, error) {
-        index_controller.message = error;
+        index_controller.messages = [error.error];
         $('#index_message_modal').modal('show')
     });
 

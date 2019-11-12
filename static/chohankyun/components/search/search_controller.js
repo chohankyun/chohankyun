@@ -25,11 +25,11 @@ chohankyun.controller('search_controller', function ($scope, $rootScope, $locati
                     search_controller.total = data.length;
                 },
                 function (error) {
-                    search_controller.errors = error;
+                    search_controller.messages = [error.detail];
                     $('#search_message_modal').modal('show')
                 });
         }
-    }
+    };
 
     post_list(init_page);
 
@@ -41,19 +41,19 @@ chohankyun.controller('search_controller', function ($scope, $rootScope, $locati
                 $location.path('/post/' + search_id);
             },
             function (error) {
-                search_controller.errors = error;
+                search_controller.messages = [error.detail];
                 $('#search_message_modal').modal('show')
             });
-    }
+    };
 
     search_controller.click_order = function (index) {
         search_controller.selected_order = index;
         post_list(init_page);
-    }
+    };
 
     search_controller.get_page = function (page) {
         post_list(page)
-    }
+    };
 
     $rootScope.$broadcast("chohankyun.category", '/search/' + $routeParams['search_word']);
 

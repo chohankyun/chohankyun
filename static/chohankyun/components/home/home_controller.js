@@ -9,7 +9,7 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
         {'image_source': 'http://via.placeholder.com/1600x400?text=First slide', 'description': 'default first image source'},
         {'image_source': 'http://via.placeholder.com/1600x400?text=Second slide', 'description': 'default second image source'},
         {'image_source': 'http://via.placeholder.com/1600x400?text=Third slide', 'description': 'default third image source'}
-    ]
+    ];
 
     $scope.index.search_word = null;
     $scope.index.select_index_item = null;
@@ -24,8 +24,7 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
             }
         },
         function (error) {
-            home_controller.errors = [];
-            home_controller.errors = error;
+            home_controller.messages = [error.detail];
             $('#home_message_modal').modal('show')
         });
 
@@ -34,8 +33,7 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
             home_controller.category_list = [{'id': 'home', 'name': 'Home'}, {'id': 'all', 'name': 'All'}].concat(data);
         },
         function (error) {
-            home_controller.errors = [];
-            home_controller.errors = error;
+            home_controller.messages = [error.detail];
             $('#home_message_modal').modal('show')
         });
 
@@ -45,8 +43,7 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
                 home_controller[order] = data;
             },
             function (error) {
-                home_controller.errors = [];
-                home_controller.errors = error;
+                home_controller.messages = [error.detail];
                 $('#home_message_modal').modal('show')
             });
     });
@@ -58,8 +55,7 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
                     home_controller[order] = data;
                 },
                 function (error) {
-                    home_controller.errors = [];
-                    home_controller.errors = error;
+                    home_controller.messages = [error.detail];
                     $('#home_message_modal').modal('show')
                 });
         });
@@ -71,11 +67,10 @@ chohankyun.controller('home_controller', function ($scope, $route, $rootScope, $
                 $location.path('/post/' + post_id);
             },
             function (error) {
-                home_controller.errors = [];
-                home_controller.errors = error;
+                home_controller.messages = [error.detail];
                 $('#home_message_modal').modal('show')
             });
-    }
+    };
 
     $rootScope.$broadcast('chohankyun.category', 'home');
 

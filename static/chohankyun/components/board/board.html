@@ -2,7 +2,7 @@
     <div class="col-lg-8 col-sm-7">
         <ul class="nav float-left">
             <li class="nav-item py-3 pr-1" ng-repeat="category in board.category_list">
-                <button type="button" class="btn btn-sm btn-block btn-outline-info" ng-class="{active: board.category == category.id}" ng-click="index.go_url('/board/'+category.id)" title="{{ category.name | translate  }}">{{ category.name | translate }}</button>
+                <button type="button" class="btn btn-sm btn-block btn-outline-info" ng-class="{active: board.category == category.id}" ng-click="index.go_url('/board/'+category.id)" title="{{ category.name | translate }}">{{ category.name | translate }}</button>
             </li>
         </ul>
     </div>
@@ -65,7 +65,9 @@
                 </button>
             </div>
             <div class="modal-body bg-info text-light">
-                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ board.message | translate }}
+                <div ng-repeat="message in board.messages">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
