@@ -24,7 +24,7 @@ chohankyun.service('auth_service', function ($q, $http, $cookies, $rootScope, re
         $rootScope.$broadcast("chohankyun.logged_out");
     };
 
-    auth_service.session_user = function (model) {
+    auth_service.session_user = function () {
         return request_service.request({
             'method': "GET",
             'url': "api_auth/session/user/",
