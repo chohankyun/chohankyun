@@ -21,10 +21,10 @@ chohankyun.controller('recommend_controller', function ($scope, $route, $routePa
                 recommend_controller.toggle_value = data.is_recommend;
             },
             function (error) {
-                $scope.post.errors = error;
+                $scope.post.messages = validate.server_error(error);
                 $('#post_message_modal').modal('show')
             });
-    }
+    };
 
     if (!angular.isUndefined($routeParams['post_id'])) {
         recommend_count($routeParams['post_id']);
@@ -38,7 +38,7 @@ chohankyun.controller('recommend_controller', function ($scope, $route, $routePa
                     recommend_count(data.post)
                 },
                 function (error) {
-                    $scope.post.errors = error;
+                    $scope.post.messages = validate.server_error(error);
                     $('#post_message_modal').modal('show')
                 });
         } else {
@@ -47,7 +47,7 @@ chohankyun.controller('recommend_controller', function ($scope, $route, $routePa
                     recommend_count($routeParams['post_id'])
                 },
                 function (error) {
-                    $scope.post.errors = error;
+                    $scope.post.messages = validate.server_error(error);
                     $('#post_message_modal').modal('show')
                 });
         }

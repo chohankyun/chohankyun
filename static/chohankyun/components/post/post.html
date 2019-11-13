@@ -125,7 +125,8 @@
             <div class="container">
                 <div class="d-block d-sm-none" ta-toolbar="[['h1','h2','h3', 'h4', 'h5', 'h6', 'p'],['bold','italics', 'justifyLeft', 'justifyCenter', 'justifyRight', 'insertImage', 'insertLink', 'insertVideo']]" id="id_content_xs" name="content_xs" text-angular ng-model="post.model.content"
                      ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around" style="font-size: small;" placeholder="{{ 'Please enter your contents. (20000 characters or less)' | translate }}" required></div>
-                <div class="d-none d-sm-block" id="id_content" name="content" text-angular ng-model="post.model.content" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around" style="font-size: small;" placeholder="{{ 'Please enter your contents. (20000 characters or less)' | translate }}"
+                <div class="d-none d-sm-block" id="id_content" name="content" text-angular ng-model="post.model.content" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around" style="font-size: small;"
+                     placeholder="{{ 'Please enter your contents. (20000 characters or less)' | translate }}"
                      required></div>
             </div>
         </div>
@@ -237,6 +238,9 @@
                         <div ng-repeat="message in reply.errors.text_content">
                             <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
                         </div>
+                        <div ng-repeat="message in reply.messages">
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-outline-info" data-dismiss="modal">{{ 'Close' | translate }}</button>
@@ -268,6 +272,9 @@
                 </div>
                 <div ng-repeat="message in post.errors.text_content">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
+                </div>
+                <div ng-repeat="message in post.messages">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
                 </div>
             </div>
             <div class="modal-footer">

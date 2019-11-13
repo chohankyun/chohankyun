@@ -47,8 +47,6 @@ chohankyun.controller('post_controller', function ($scope, $q, $window, $routePa
 
     post_controller.create = function (formData) {
         post_controller.errors = [];
-        post_controller.result = null;
-
         validate.form_validation(formData, post_controller.errors);
         if (post_controller.errors.category.length > 0
             || post_controller.errors.subject.length > 0
@@ -63,7 +61,7 @@ chohankyun.controller('post_controller', function ($scope, $q, $window, $routePa
                         $location.path($scope.index.category);
                     },
                     function (error) {
-                        post_controller.errors = error;
+                        post_controller.messages = validate.server_error(error);
                         $('#post_message_modal').modal('show');
                     });
             } else {
@@ -72,12 +70,12 @@ chohankyun.controller('post_controller', function ($scope, $q, $window, $routePa
                         $location.path($scope.index.category);
                     },
                     function (error) {
-                        post_controller.errors = error;
+                        post_controller.messages = validate.server_error(error);
                         $('#post_message_modal').modal('show');
                     });
             }
         }
-    }
+    };
 
 
     post_controller.delete = function (id) {
@@ -90,15 +88,14 @@ chohankyun.controller('post_controller', function ($scope, $q, $window, $routePa
                     $window.location.reload();
                 },
                 function (error) {
-                    post_controller.errors = error;
+                    post_controller.messages = validate.server_error(error);
                     $('#post_message_modal').modal('show');
                 });
         });
-    }
+    };
 
     post_controller.cancel = function () {
         $location.path($scope.index.category);
-
     }
 
 });

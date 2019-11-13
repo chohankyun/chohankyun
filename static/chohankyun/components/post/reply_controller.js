@@ -38,8 +38,6 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
 
     reply_controller.create = function (formData) {
         reply_controller.errors = [];
-        reply_controller.result = null;
-
         validate.form_validation(formData, reply_controller.errors);
 
         if (reply_controller.errors.create_reply_editor.length > 0) {
@@ -52,22 +50,19 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
                     $route.reload();
                 },
                 function (error) {
-                    reply_controller.errors = error;
+                    reply_controller.messages = validate.server_error(error);
                     $('#reply_message_modal').modal('show');
                 });
         }
-    }
+    };
 
     reply_controller.update = function (id, index) {
-        reply_controller.errors = [];
-        reply_controller.messages = [];
-
         reply_controller.model = reply_controller.reply_list[index];
         reply_controller.model.updated_datetime = '';
         reply_controller.model.created_datetime = '';
 
         if (angular.isUndefined(reply_controller.model.content)) {
-            reply_controller.messages.error = ['required.']
+            reply_controller.messages = ['required.'];
             $('#reply_message_modal').modal('show');
             return;
         }
@@ -77,10 +72,10 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
                 $route.reload();
             },
             function (error) {
-                reply_controller.errors = error;
+                reply_controller.messages = validate.server_error(error);
                 $('#reply_message_modal').modal('show')
             });
-    }
+    };
 
     reply_controller.delete = function (id) {
         $("#confirm_message_modal").modal('show');
@@ -91,11 +86,11 @@ chohankyun.controller('reply_controller', function ($scope, $route, $window, $ro
                     $window.location.reload();
                 },
                 function (error) {
-                    reply_controller.errors = error;
+                    reply_controller.messages = validate.server_error(error);
                     $('#reply_message_modal').modal('show');
                 });
         });
-    }
+    };
 
     reply_controller.cancel = function () {
         $route.reload();
