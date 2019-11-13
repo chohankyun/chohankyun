@@ -8,8 +8,6 @@ chohankyun.controller('register_controller', function ($scope, auth_service, val
 
     register_controller.register = function (formData) {
         register_controller.errors = [];
-        register_controller.messages = [];
-
         validate.form_validation(formData, register_controller.errors);
 
         if (!formData.$invalid) {

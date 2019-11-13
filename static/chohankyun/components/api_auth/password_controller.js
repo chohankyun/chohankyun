@@ -8,7 +8,6 @@ chohankyun.controller('password_controller', function ($scope, $window, auth_ser
 
     password_controller.change_password = function (formData) {
         password_controller.errors = [];
-
         validate.form_validation(formData, password_controller.errors);
 
         if (!formData.$invalid) {

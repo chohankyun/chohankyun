@@ -1,6 +1,6 @@
 'use strict';
 
-var chohankyun = angular.module('chohankyun')
+var chohankyun = angular.module('chohankyun');
 
 chohankyun.controller('login_controller', function ($scope, $window, $location, auth_service, validate) {
     var login_controller = this;
@@ -10,8 +10,6 @@ chohankyun.controller('login_controller', function ($scope, $window, $location, 
 
     login_controller.login = function (formData) {
         login_controller.errors = [];
-        login_controller.messages = [];
-
         validate.form_validation(formData, login_controller.errors);
 
         if (!formData.$invalid) {
@@ -28,7 +26,7 @@ chohankyun.controller('login_controller', function ($scope, $window, $location, 
                     }
                 });
         }
-    }
+    };
 
     login_controller.re_register = function () {
         auth_service.reset_user(login_controller.model).then(

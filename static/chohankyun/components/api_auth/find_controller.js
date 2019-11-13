@@ -1,6 +1,6 @@
 'use strict';
 
-var chohankyun = angular.module('chohankyun')
+var chohankyun = angular.module('chohankyun');
 
 chohankyun.controller('find_controller', function ($scope, $routeParams, $location, auth_service, validate) {
     var find_controller = this;
@@ -14,7 +14,6 @@ chohankyun.controller('find_controller', function ($scope, $routeParams, $locati
 
     find_controller.send_email = function (formData) {
         find_controller.errors = [];
-
         validate.form_validation(formData, find_controller.errors);
 
         if (!formData.$invalid) {

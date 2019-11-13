@@ -14,7 +14,6 @@ chohankyun.controller('profile_controller', function ($scope, $window, $location
 
     profile_controller.update = function (formData) {
         profile_controller.errors = [];
-        profile_controller.messages = [];
         validate.form_validation(formData, profile_controller.errors);
 
         if (!formData.$invalid) {
