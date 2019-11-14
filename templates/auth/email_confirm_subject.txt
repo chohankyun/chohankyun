@@ -1,4 +1,4 @@
 {% load i18n %}
 {% autoescape off %}
-[{{ site_name }}] {% blocktrans %}Please Confirm Your Email Address for Register.{% endblocktrans %}
+[{{ site_name }}] {% blocktrans %}Please Confirm Your E-mail Address for Sign Up.{% endblocktrans %}
 {% endautoescape %}

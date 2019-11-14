@@ -1,13 +1,13 @@
 {% load i18n %}{% autoescape off %}
-{% blocktrans %}Hello from {{ site_name }}!{% endblocktrans %}
+    {% blocktrans %}Hello from {{ site_name }}!{% endblocktrans %}
 
-{% blocktrans %}You're receiving this email because user {{ userr.userrname }} has given yours as an email address to connect their account.{% endblocktrans %}
+    {% blocktrans %}You're receiving this e-mail because user {{ userr.userrname }} has given yours as an e-mail address to connect their account.{% endblocktrans %}
 
-{% blocktrans %}To confirm this is correct, go to.{% endblocktrans %}
+    {% blocktrans %}To confirm this is correct, go to.{% endblocktrans %}
 
-{{ activate_url }}
+    {{ activate_url }}
 
-{% blocktrans %}Thank you.{% endblocktrans %}
+    {% blocktrans %}Thank you.{% endblocktrans %}
 
-{% blocktrans %}{{ site_name }} {{ domain }}{% endblocktrans %}
+    {{ site_name }} : {{ protocol }}://{{ domain }}
 {% endautoescape %}
