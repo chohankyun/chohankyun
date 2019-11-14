@@ -24,8 +24,8 @@ msgstr "회원가입을 위한 이메일 주소 검증 요청입니다."
 msgid "Hello from %(site_name)s!"
 msgstr "안녕하세요. %(site_name)s 입니다!"
 
-msgid "You're receiving this e-mail because user %(user_display)s has given yours as an e-mail address to connect their account."
-msgstr "사용자 %(user_display)s 대한 이메일 검증을 위해 이메일이 수신되었습니다."
+msgid "You're receiving this e-mail because user %(username)s has given yours as an e-mail address to connect their account."
+msgstr "사용자 %(username)s 대한 이메일 검증을 위해 이메일이 수신되었습니다."
 
 msgid "To confirm this is correct, go to."
 msgstr "이메일 확인을 위해 아래의 URI 를 클릭하세요."

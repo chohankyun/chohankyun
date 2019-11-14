@@ -35,6 +35,7 @@ class EmailMixin:
             'domain': domain,
             'site_name': site_name,
             'user': user,
+            'username': user.username,
             'protocol': 'https' if request.is_secure() else 'http',
         }
 

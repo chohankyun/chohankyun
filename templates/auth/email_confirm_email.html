@@ -1,7 +1,8 @@
-{% load i18n %}{% autoescape off %}
+{% load i18n %}
+{% autoescape off %}
     {% blocktrans %}Hello from {{ site_name }}!{% endblocktrans %}
 
-    {% blocktrans %}You're receiving this e-mail because user {{ userr.userrname }} has given yours as an e-mail address to connect their account.{% endblocktrans %}
+    {% blocktrans %}You're receiving this e-mail because user {{ username }} has given yours as an e-mail address to connect their account.{% endblocktrans %}
 
     {% blocktrans %}To confirm this is correct, go to.{% endblocktrans %}
 
