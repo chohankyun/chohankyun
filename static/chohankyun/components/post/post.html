@@ -239,7 +239,7 @@
                             <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
                         </div>
                         <div ng-repeat="message in reply.messages">
-                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -274,7 +274,7 @@
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'Contents' | translate }} : {{ message | translate }}
                 </div>
                 <div ng-repeat="message in post.messages">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
                 </div>
             </div>
             <div class="modal-footer">

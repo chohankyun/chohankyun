@@ -54,7 +54,7 @@
             </div>
             <div class="modal-body bg-info text-light">
                 <div ng-repeat="message in login.messages">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
                 </div>
             </div>
             <div class="modal-footer">
@@ -76,7 +76,7 @@
             </div>
             <div class="modal-body bg-info text-light">
                 <div ng-repeat="message in login.messages">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message | translate}}
                 </div>
                 <div>
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'If you can not complete your email verification, you will need to sign up again and your existing membership information will be deleted.' | translate }}
