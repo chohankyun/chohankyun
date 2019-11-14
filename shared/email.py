@@ -19,7 +19,7 @@ class EmailMixin:
         user = get_user_model().objects.filter(email=email).first()
 
         if not user:
-            msg = _('E-mail address matching query does not exist.')
+            msg = 'E-mail address matching query does not exist.'
             raise exceptions.ValidationError(msg)
 
         return user

@@ -4,8 +4,7 @@ var chohankyun = angular.module('chohankyun');
 
 chohankyun.controller('find_controller', function ($scope, $routeParams, $location, auth_service, validate) {
     var find_controller = this;
-    var find_type = {'Username': 'Username', 'Password': 'Password'}
-
+    var find_type = {'username': 'Username', 'password': 'Password'}
     find_controller.model = {'type': '', 'email': ''};
 
     if (!angular.isUndefined($routeParams['find_word'])) {

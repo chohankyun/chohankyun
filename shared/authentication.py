@@ -28,16 +28,17 @@ class BaseJSONWebTokenAuthentication(BaseAuthentication):
             handler = Handler()
             payload = handler.jwt_decode_handler(jwt_value)
         except jwt.ExpiredSignature:
-            msg = _('Signature has expired.')
+            msg = 'Signature has expired.'
             raise exceptions.AuthenticationFailed(msg)
         except jwt.DecodeError:
-            msg = _('Error decoding signature.')
+            msg = 'Error decoding signature.'
             raise exceptions.AuthenticationFailed(msg)
         except jwt.InvalidTokenError:
-            raise exceptions.AuthenticationFailed()
+            msg = 'Invalid token.'
+            raise exceptions.AuthenticationFailed(msg)
 
         if payload.get('client_ip') != handler.get_client_ip_address(request):
-            msg = _('Error decoding data.')
+            msg = 'Error decoding data.'
             raise exceptions.AuthenticationFailed(msg)
 
         user = self.get_user(payload)
@@ -65,11 +66,10 @@ class JSONWebTokenAuthentication(BaseJSONWebTokenAuthentication):
             return None
 
         if len(auth) == 1:
-            msg = _('Invalid Authorization header. No credentials provided.')
+            msg = 'Invalid Authorization header. No credentials provided.'
             raise exceptions.AuthenticationFailed(msg)
         elif len(auth) > 2:
-            msg = _('Invalid Authorization header. Credentials string '
-                    'should not contain spaces.')
+            msg = 'Invalid Authorization header. Credentials string should not contain spaces.'
             raise exceptions.AuthenticationFailed(msg)
 
         return auth[1]

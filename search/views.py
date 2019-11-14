@@ -41,9 +41,9 @@ class SearchPostByOrder(ListAPIView):
         search_word = self.kwargs.get('search_word')
 
         if not search_word:
-            raise exceptions.ParseError(_('Please enter at least 2 characters.'))
+            raise exceptions.ParseError('Please enter at least 2 characters.')
         if len(search_word) < 2:
-            raise exceptions.ParseError(_('Please enter at least 2 characters.'))
+            raise exceptions.ParseError('Please enter at least 2 characters.')
 
         return search_word
 

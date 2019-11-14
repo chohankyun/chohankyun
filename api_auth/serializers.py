@@ -30,21 +30,21 @@ class LoginSerializer(serializers.Serializer):
         if username and password:
             user = self.authenticate(username=username, password=password)
         else:
-            msg = _('Must include "username" and "password".')
+            msg = 'Must include "username" and "password".'
             raise exceptions.ValidationError(msg)
 
         if user:
             if not user.is_active:
-                msg = _('User account is disabled.')
+                msg = 'User account is disabled.'
                 raise exceptions.ValidationError(msg)
             if user.is_staff or user.is_superuser:
-                msg = _('You do not have permission to perform this action.')
+                msg = 'You do not have permission to perform this action.'
                 raise exceptions.ValidationError(msg)
             if not user.is_email_verified:
-                msg = _('Email is not verified.')
+                msg = 'Email is not verified.'
                 raise exceptions.NotAcceptable(msg)
         else:
-            msg = _('Unable to log in with provided credentials.')
+            msg = 'Unable to log in with provided credentials.'
             raise exceptions.ValidationError(msg)
 
         attrs['user'] = user
@@ -88,7 +88,7 @@ class UsernameFindSerializer(serializers.Serializer, EmailMixin):
         user = self._validate_email(email)
 
         if not user.is_active:
-            msg = _('User account is disabled.')
+            msg = 'User account is disabled.'
             raise exceptions.ValidationError(msg)
 
         attrs['user'] = user
@@ -106,7 +106,7 @@ class PasswordResetSerializer(serializers.Serializer, EmailMixin):
         user = self._validate_email(email)
 
         if not user.is_active:
-            msg = _('User account is disabled.')
+            msg = 'User account is disabled.'
             raise exceptions.ValidationError(msg)
 
         attrs['user'] = user
@@ -162,19 +162,19 @@ class PasswordChangeSerializer(serializers.Serializer, EmailMixin):
             jwt_user = self.context['request'].user
             user = get_user_model().objects.get(pk=jwt_user.id)
         except get_user_model().DoesNotExist:
-            msg = _('User matching query does not exist.')
+            msg = 'User matching query does not exist.'
             raise exceptions.ValidationError(msg)
 
         if not user.is_active:
-            msg = _('User account is disabled.')
+            msg = 'User account is disabled.'
             raise exceptions.ValidationError(msg)
 
         if not user.check_password(attrs['old_password']):
-            msg = _('Invalid old password.')
+            msg = 'Invalid old password.'
             raise serializers.ValidationError(msg)
 
         if attrs['new_password1'] != attrs['new_password2']:
-            msg = _("The two password fields didn't match.")
+            msg = "The two password fields didn't match."
             raise serializers.ValidationError(msg)
 
         attrs['user'] = user
@@ -204,7 +204,7 @@ class RegisterSerializer(serializers.Serializer, EmailMixin):
     def validate_username(username):
         user = get_user_model().objects.filter(username=username).first()
         if user:
-            msg = _('A user is already registered with this username.')
+            msg = 'A user is already registered with this username.'
             raise serializers.ValidationError(msg)
         return username
 
@@ -212,13 +212,13 @@ class RegisterSerializer(serializers.Serializer, EmailMixin):
     def validate_email(email):
         user = get_user_model().objects.filter(email=email).first()
         if user:
-            msg = _('A user is already registered with this email.')
+            msg = 'A user is already registered with this email.'
             raise serializers.ValidationError(msg)
         return email
 
     def validate(self, data):
         if data['password1'] != data['password2']:
-            msg = _("The two password fields didn't match.")
+            msg = "The two password fields didn't match."
             raise serializers.ValidationError(msg)
         return data
 

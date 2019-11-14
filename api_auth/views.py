@@ -70,7 +70,7 @@ class UsernameFindView(GenericAPIView):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(_('Your username has been sent to your e-mail address.'))
+        return Response('Your username has been sent to your e-mail address.')
 
 
 class PasswordResetView(GenericAPIView):
@@ -81,7 +81,7 @@ class PasswordResetView(GenericAPIView):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(_('Password reset e-mail has been sent.'))
+        return Response('Password reset e-mail has been sent.')
 
 
 class PasswordResetConfirmView(GenericAPIView):
@@ -110,7 +110,7 @@ class PasswordChangeView(GenericAPIView):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(_('Password has been changed with the new password.'))
+        return Response('Password has been changed with the new password.')
 
 
 class RegisterView(GenericAPIView):
@@ -125,7 +125,7 @@ class RegisterView(GenericAPIView):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(_('Verification email sent.'))
+        return Response('Verification email sent.')
 
 
 class EmailConfirmView(GenericAPIView):
@@ -162,7 +162,7 @@ class SessionUserDeleteView(DestroyAPIView):
 
     def perform_destroy(self, instance):
         if not instance.check_password(self.request.body.decode('utf-8')):
-            raise exceptions.AuthenticationFailed(_('Invalid password.'))
+            raise exceptions.AuthenticationFailed('Invalid password.')
         instance.delete()
 
 
@@ -176,7 +176,7 @@ class SessionUserUpdateView(UpdateAPIView):
 
     def perform_update(self, serializer):
         if not serializer.instance.check_password(self.request.data['password']):
-            raise exceptions.AuthenticationFailed(_('Invalid password.'))
+            raise exceptions.AuthenticationFailed('Invalid password.')
         serializer.save()
 
     def get_response(self, user):
