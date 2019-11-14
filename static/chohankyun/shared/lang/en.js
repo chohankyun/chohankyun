@@ -83,5 +83,21 @@ chohankyun.config(function ($translateProvider) {
         'Phone': 'Phone',
         'Please enter at least 2 characters.': 'Please enter at least 2 characters.',
         'User is not logged in.': 'User is not logged in.',
+
+        'Must include "username" and "password".': 'Must include "username" and "password".',
+        'User account is disabled.': 'User account is disabled.',
+        'You do not have permission to perform this action.': 'You do not have permission to perform this action.',
+        'Email is not verified.': 'Email is not verified.',
+        'Unable to log in with provided credentials.': 'Unable to log in with provided credentials.',
+        'Invalid old password.': 'Invalid old password.',
+        "The two password fields didn't match.": "The two password fields didn't match.",
+        'A user is already registered with this username.': 'A user is already registered with this username.',
+        'A user is already registered with this email.': 'A user is already registered with this email.',
+        'E-mail address matching query does not exist.': 'E-mail address matching query does not exist.',
+        'Your username has been sent to your e-mail address.': 'Your username has been sent to your e-mail address.',
+        'Password reset e-mail has been sent.': 'Password reset e-mail has been sent.',
+        'Password has been changed with the new password.': 'Password has been changed with the new password.',
+        'Verification email sent.': 'Verification email sent.',
+        'Invalid password.': 'Invalid password.',
     });
 });
