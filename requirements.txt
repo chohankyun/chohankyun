@@ -1,6 +1,6 @@
-asgiref==3.2.2
-asn1crypto==0.24.0
-beautifulsoup4==4.8.0
+asgiref==3.2.3
+asn1crypto==1.2.0
+beautifulsoup4==4.8.1
 certifi==2019.9.11
 chardet==3.0.4
 defusedxml==0.6.0
@@ -10,9 +10,9 @@ djangorestframework-stubs==1.0.0
 idna==2.8
 PyJWT==1.7.1
 PyMySQL==0.9.3
-pytz==2019.2
+pytz==2019.3
 requests==2.22.0
-six==1.12.0
-soupsieve==1.9.3
+six==1.13.0
+soupsieve==1.9.5
 sqlparse==0.3.0
-urllib3==1.25.5
+urllib3==1.25.7
