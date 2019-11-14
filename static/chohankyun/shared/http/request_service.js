@@ -9,9 +9,6 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
         // Change this to point to your Django REST Auth API
         // e.g. /api/rest-auth  (DO NOT INCLUDE ENDING SLASH)
         'API_URL': '',
-        // Set use_session to true to use Django sessions to store security token.
-        // Set use_session to false to store the security token locally and transmit it as a custom header.
-        'use_session': true,
         /* END OF CUSTOMIZATION */
         'authenticated': null,
         'authPromise': null,
@@ -33,7 +30,6 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
             // Fire the request, as configured.
             $http({
                 url: url,
-                withCredentials: this.use_session,
                 method: method.toUpperCase(),
                 params: params,
                 data: data
@@ -45,26 +41,26 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
                 .error(angular.bind(this, function (data, status, headers, config) {
                     $rootScope.$broadcast("loading", false);
                     if (status == 500) {
-                        data = "Internal server error.";
+                        data = {"detail": "Internal server error."};
                         $rootScope.$broadcast("error", data);
                         return;
                     } else if (status == 0) {
                         if (data == "") {
-                            data = "Could not connect to server.";
+                            data = {"detail": "Could not connect to server."};
                         }
                         // or if the data is null, then there was a timeout.
                         if (data == null) {
-                            data = "Could not connect to server cause by time out.";
+                            data = {"detail": "Could not connect to server cause by time out."};
                         }
                         $rootScope.$broadcast("error", data);
                         return;
                     } else if (status == -1) {
-                        data ="Could not connect to server.";
+                        data = {"detail": "Could not connect to server."};
                         $rootScope.$broadcast("error", data);
                         return;
                     }
 
-                    if(data) {
+                    if (data) {
                         data.status = status;
                     }
                     deferred.reject(data, status, headers, config);
@@ -88,7 +84,7 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
             if (this.authenticated != null && !force) {
                 // We have a stored value which means we can pass it back right away.
                 if (this.authenticated == false && restrict) {
-                    getAuthStatus.reject("User is not logged in.");
+                    getAuthStatus.reject({"detail": "User is not logged in."});
                 } else {
                     getAuthStatus.resolve($rootScope.data);
                 }
@@ -105,7 +101,7 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
                     $cookies.remove('token');
                     $rootScope.$broadcast("chohankyun.logged_out");
                     if (restrict) {
-                        getAuthStatus.reject("User is not logged in.");
+                        getAuthStatus.reject({"detail": "User is not logged in."});
                     } else {
                         getAuthStatus.resolve(data);
                     }
@@ -113,9 +109,8 @@ chohankyun.service('request_service', function ($q, $http, $cookies, $rootScope)
             }
             return getAuthStatus.promise;
         },
-        'initialize': function (url, sessions) {
+        'initialize': function (url) {
             this.API_URL = url;
-            this.use_session = sessions;
             return this.authentication_status();
         }
 

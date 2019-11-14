@@ -16,5 +16,5 @@ var chohankyun = angular.module('chohankyun', [
 ]);
 
 chohankyun.run(function (request_service) {
-    request_service.initialize('/', false);
+    request_service.initialize('/');
 });

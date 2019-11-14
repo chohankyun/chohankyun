@@ -65,7 +65,7 @@ chohankyun.controller('index_controller', function ($rootScope, $scope, $window,
     });
 
     $scope.$on('error', function (event, error) {
-        index_controller.messages = [error.error];
+        index_controller.messages = [error.detail];
         $('#index_message_modal').modal('show')
     });
 
