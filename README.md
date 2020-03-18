@@ -186,7 +186,19 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 * sudo locale-gen ko_KR.UTF-8
 * sudo dpkg-reconfigure locales
 * sudo update-locale LANG=ko_KR.UTF-8 LANGUAGE=ko_KR:ko
-* sudo dpkg-reconfigure tzdata
+* sudo dpkg-reconfigure tzdata  
+
+### ntp 동기화 설정 
+* sudo apt-get ntp  
+* sudo vi /etc/ntp.conf
+* 기존내용 주석처리 
+* 아래 내용 추가
+
+    pool 1.kr.pool.ntp.org iburst  
+    pool 1.asia.pool.ntp.org iburst  
+    pool 2.asia.pool.ntp.org iburst  
+
+* sudo service ntp restart  
 
 ### python3.6 설치 / 설정 
 * sudo add-apt-repository ppa:jonathonf/python-3.6
