@@ -194,9 +194,9 @@ chohankyun.com 사이트를 만들기 위한 소스입니다.
 * 기존내용 주석처리 
 * 아래 내용 추가
 
-    pool 1.kr.pool.ntp.org iburst  
-    pool 1.asia.pool.ntp.org iburst  
-    pool 2.asia.pool.ntp.org iburst  
+      pool 1.kr.pool.ntp.org iburst  
+      pool 1.asia.pool.ntp.org iburst  
+      pool 2.asia.pool.ntp.org iburst  
 
 * sudo service ntp restart  
 
