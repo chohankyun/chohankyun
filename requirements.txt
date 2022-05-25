@@ -8,7 +8,7 @@ Django==2.1.12
 djangorestframework==3.10.3
 djangorestframework-stubs==1.0.0
 idna==2.8
-PyJWT==1.7.1
+PyJWT==2.4.0
 PyMySQL==0.9.3
 pytz==2019.3
 requests==2.22.0
