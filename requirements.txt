@@ -1,7 +1,7 @@
 asgiref==3.2.3
 asn1crypto==1.2.0
 beautifulsoup4==4.8.1
-certifi==2019.9.11
+certifi==2022.12.7
 chardet==3.0.4
 defusedxml==0.6.0
 Django==2.1.12
